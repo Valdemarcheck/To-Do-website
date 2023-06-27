@@ -6,11 +6,8 @@ function openListForm() {
   listFormBackground.style.display = "flex";
 }
 
-function closeListForm(shouldReset) {
+function closeListForm() {
   listFormBackground.style.display = "none";
-  if (shouldReset) {
-    listFormBackground.querySelector("form").reset();
-  }
 }
 
 function getListFormData() {
@@ -23,7 +20,12 @@ function getListFormData() {
   PubSub.emit("GotListData", data);
 }
 
+function resetListForm() {
+  listFormBackground.querySelector("form").reset();
+}
+
 PubSub.on("OpenListCreationForm", openListForm);
 PubSub.on("CloseListCreationForm", closeListForm);
 
 PubSub.on("ListDataIsRequired", getListFormData);
+PubSub.on("ListDataIsNotRequired", resetListForm);
