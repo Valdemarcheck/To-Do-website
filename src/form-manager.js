@@ -6,4 +6,9 @@ function openListForm() {
   listFormBackground.style.display = "flex";
 }
 
+function closeListForm() {
+  listFormBackground.style.display = "none";
+}
+
 PubSub.on("OpenListCreationForm", openListForm);
+PubSub.on("CloseListCreationForm", closeListForm);

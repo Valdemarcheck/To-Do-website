@@ -15,7 +15,23 @@
       <div id="lists"></div>
     </div>
     <div class="form-background list">
-      <form action="" id="list-creation-form"></form>
+      <form id="list-creation-form">
+        <div class="row">
+          <h2>Create a new list</h2>
+          <button id="list-creation-form-close-button" type="button">x</button>
+        </div>
+        <div class="row">
+          <label for="listName">Name</label>
+          <input type="text" id="listName" />
+        </div>
+        <div class="row">
+          <label for="listColor">Color</label>
+          <input type="color" id="listColor" />
+        </div>
+        <div class="row">
+          <button id="create-list-button" type="button">+</button>
+        </div>
+      </form>
     </div>
     <div class="form-background task">
       <form action="" id="task-creation-form"></form>

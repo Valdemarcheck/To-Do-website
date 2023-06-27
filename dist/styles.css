@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+button {
+  width: 20px;
+  aspect-ratio: 1/1;
+}
+
 .form-background {
   background-color: rgba(189, 189, 189, 0.437);
   position: absolute;
@@ -18,16 +23,36 @@
 
 form {
   background-color: rgb(35, 35, 35);
-  width: 10%;
-  height: 10%;
+  width: auto;
+  height: auto;
+  padding: 20px;
+  color: white;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .form-background.list {
-  display: none;
+  display: flex;
 }
 
 .form-background.task {
   display: none;
+}
+
+.row {
+  min-width: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.row * {
+  min-width: max-content;
 }
 
 #lists-section {
