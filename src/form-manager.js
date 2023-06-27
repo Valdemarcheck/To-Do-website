@@ -17,7 +17,6 @@ function getListFormData() {
     const inputContentType = current.id;
     data[inputContentType] = current.value;
   });
-  console.log(data);
   PubSub.emit("GotListData", data);
 }
 

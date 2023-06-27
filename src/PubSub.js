@@ -3,7 +3,7 @@ export const PubSub = (() => {
   const events = {};
 
   function debugEventAnnounce(event) {
-    console.log(`EVENT ${event} IS CALLED`);
+    console.log(`[debug] EVENT ${event} IS CALLED`);
   }
 
   function emit(event, param = null) {
