@@ -2,8 +2,13 @@ export const PubSub = (() => {
   const NOT_PRESENT_IN_THE_ARRAY = -1;
   const events = {};
 
+  function debugEventAnnounce(event) {
+    console.log(`EVENT ${event} IS CALLED`);
+  }
+
   function emit(event, param = null) {
     if (events[event]) {
+      debugEventAnnounce(event);
       for (let func of events[event]) {
         func(param);
       }
