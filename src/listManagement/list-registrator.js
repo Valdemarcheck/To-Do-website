@@ -8,6 +8,7 @@ function addListToRegistry(list) {
   }
   LIST_REGISTRY[list.name] = list;
   console.log(LIST_REGISTRY);
+  PubSub.emit("ListRegistered", LIST_REGISTRY);
 }
 
 function makeListNameUnique(name) {

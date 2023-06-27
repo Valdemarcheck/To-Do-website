@@ -1,6 +1,6 @@
 const { PubSub } = require("./PubSub");
 
-const listFormBackground = document.querySelector(".form-background.list");
+const listFormBackground = document.getElementById("list-form-background");
 
 function openListForm() {
   listFormBackground.style.display = "flex";

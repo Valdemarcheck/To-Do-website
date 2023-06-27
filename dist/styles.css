@@ -5,8 +5,16 @@
 }
 
 button {
-  width: 20px;
-  aspect-ratio: 1/1;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+#list-creation-form-open-button {
+  margin-top: 70px;
+  margin-left: 70px;
+  width: 40px;
+  height: 40px;
+  font-size: 2rem;
 }
 
 .form-background {
@@ -69,13 +77,47 @@ form {
 
 #lists {
   height: auto;
+
+  display: flex;
+  gap: 10px;
 }
 
 .list {
-  width: 200px;
-  background-color: aquamarine;
+  flex-shrink: 0;
+  width: 240px;
+  padding: 10px;
+  border: 3px solid black;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .list-row {
-  height: 20px;
+  height: 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.list-buttons {
+  padding: 2px;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 10px;
+}
+
+.tasks-section {
+  background-color: aquamarine;
+  width: 100%;
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
