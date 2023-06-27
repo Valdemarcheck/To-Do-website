@@ -25,6 +25,7 @@ function renderList(list) {
   listDiv.append(listRow);
 
   const listNameText = document.createElement("p");
+  listNameText.classList.add("list-name");
   listNameText.textContent = list.name;
   listRow.append(listNameText);
 

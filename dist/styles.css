@@ -84,7 +84,7 @@ form {
 
 .list {
   flex-shrink: 0;
-  width: 240px;
+  min-width: 240px;
   padding: 10px;
   border: 3px solid black;
   border-radius: 5px;
@@ -101,6 +101,10 @@ form {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+}
+
+.list-name {
+  max-width: 20ch;
 }
 
 .list-buttons {
