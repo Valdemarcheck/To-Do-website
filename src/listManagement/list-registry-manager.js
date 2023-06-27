@@ -11,7 +11,7 @@ function addListToRegistry(list) {
 }
 
 function makeListNameUnique(name) {
-  let index = name.split(" ")[1] || 0;
+  let index = 0;
   while (name in LIST_REGISTRY) {
     name = name.split(" ")[1] + " " + index;
     index++;
