@@ -1,0 +1,18 @@
+{
+  "name": "to-do-website",
+  "version": "1.0.0",
+  "description": "This is my implementation of a \"Todo list\" project from the TOP curriculum. It showcases my knowledge of such essential JS concepts like prototyping, ES6 class syntax and more. It also shows my basic knowledge of Webpack",
+  "private": "true",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "run": "webpack && webpack serve --open"
+  },
+  "author": "Valdemar_check",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
