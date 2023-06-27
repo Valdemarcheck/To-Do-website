@@ -1,3 +1,49 @@
 * {
-  color: red;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.form-background {
+  background-color: rgba(189, 189, 189, 0.437);
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  background-color: rgb(35, 35, 35);
+  width: 10%;
+  height: 10%;
+}
+
+.form-background.list {
+  display: none;
+}
+
+.form-background.task {
+  display: none;
+}
+
+#lists-section {
+  background-color: red;
+  margin-top: 100px;
+  margin-left: 40px;
+  padding: 10px;
+  width: 70vw;
+  overflow-x: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#lists {
+  height: 300px;
+  background-color: blue;
 }
