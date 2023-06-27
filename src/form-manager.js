@@ -6,8 +6,11 @@ function openListForm() {
   listFormBackground.style.display = "flex";
 }
 
-function closeListForm() {
+function closeListForm(shouldReset) {
   listFormBackground.style.display = "none";
+  if (shouldReset) {
+    listFormBackground.querySelector("form").reset();
+  }
 }
 
 function getListFormData() {
