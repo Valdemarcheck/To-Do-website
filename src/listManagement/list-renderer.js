@@ -56,5 +56,11 @@ function setupAllListButtonNames(list) {
   list.AddTaskButton.textContent = "+";
 }
 
+function stopRenderingList(listName) {
+  const listDiv = listDisplay.querySelector(`[data-list-id='${listName}']`);
+  listDisplay.remove(listDiv);
+}
+
 PubSub.on("ListPending", setupAllListButtonNames);
 PubSub.on("ListRegistered", renderAllLists);
+PubSub.on("ListShouldBeRemoved", stopRenderingList);

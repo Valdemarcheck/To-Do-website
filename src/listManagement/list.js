@@ -1,3 +1,5 @@
+import { PubSub } from "../PubSub";
+
 export class List {
   TASK_REGISTRY = [];
 
@@ -6,6 +8,9 @@ export class List {
     this.color = data.color;
 
     this.RemoveListButton = document.createElement("button");
+    this.RemoveListButton.addEventListener("click", () => {
+      PubSub.emit("ListShouldBeRemoved", this.name);
+    });
     this.SortListButton = document.createElement("button");
     this.EditListButton = document.createElement("button");
     this.AddTaskButton = document.createElement("button");

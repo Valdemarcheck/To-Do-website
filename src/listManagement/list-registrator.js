@@ -7,8 +7,8 @@ function addListToRegistry(list) {
     list.name = makeListNameUnique(list.name);
   }
   LIST_REGISTRY[list.name] = list;
-  console.log(LIST_REGISTRY);
   PubSub.emit("ListRegistered", LIST_REGISTRY);
+  console.log(LIST_REGISTRY);
 }
 
 function makeListNameUnique(name) {
@@ -20,4 +20,10 @@ function makeListNameUnique(name) {
   return name;
 }
 
+function removeListFromRegistry(listName) {
+  delete LIST_REGISTRY[listName];
+  console.log(LIST_REGISTRY);
+}
+
 PubSub.on("ListPending", addListToRegistry);
+PubSub.on("ListShouldBeRemoved", removeListFromRegistry);
