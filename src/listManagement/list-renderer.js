@@ -18,6 +18,7 @@ function renderList(list) {
   const listDiv = document.createElement("div");
   listDiv.classList.add("list");
   listDiv.style.borderColor = list.color;
+  listDiv.dataset.listId = list.name;
   listDisplay.append(listDiv);
 
   const listRow = document.createElement("div");
