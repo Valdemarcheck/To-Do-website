@@ -27,5 +27,5 @@ function resetListForm() {
 PubSub.on("OpenListCreationForm", openListForm);
 PubSub.on("CloseListCreationForm", closeListForm);
 
-PubSub.on("ListDataIsRequired", getListFormData);
+PubSub.on("UserWantsToCreateNewList", getListFormData);
 PubSub.on("ListDataIsNotRequired", resetListForm);
