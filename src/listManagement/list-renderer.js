@@ -49,12 +49,12 @@ function renderAllListButtons(list, buttonsDiv) {
   });
 }
 
-function setupAllListButtons(list) {
+function setupAllListButtonNames(list) {
   list.RemoveListButton.textContent = "x";
   list.EditListButton.textContent = "edit";
   list.SortListButton.textContent = "sort";
   list.AddTaskButton.textContent = "+";
 }
 
-PubSub.on("ListPending", setupAllListButtons);
+PubSub.on("ListPending", setupAllListButtonNames);
 PubSub.on("ListRegistered", renderAllLists);
