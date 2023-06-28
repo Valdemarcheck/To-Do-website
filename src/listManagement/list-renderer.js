@@ -2,17 +2,6 @@ import { PubSub } from "../PubSub";
 
 const listDisplay = document.getElementById("lists");
 
-function clearLists() {
-  listDisplay.textContent = "";
-}
-
-function renderAllLists(registry) {
-  clearLists();
-  for (let list of Object.values(registry)) {
-    renderList(list);
-  }
-}
-
 function renderList(list) {
   const listDiv = document.createElement("div");
   listDiv.classList.add("list");
@@ -62,5 +51,5 @@ function stopRenderingList(listName) {
 }
 
 PubSub.on("ListPending", setupAllListButtonNames);
-PubSub.on("ListRegistered", renderAllLists);
+PubSub.on("ListRegistered", renderList);
 PubSub.on("ListShouldBeRemoved", stopRenderingList);
