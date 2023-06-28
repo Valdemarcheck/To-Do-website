@@ -11,5 +11,8 @@ function askForListData() {
   PubSub.emit("ListDataIsRequired");
 }
 
+function setupListButtons() {}
+
 PubSub.on("UserWantsToCreateNewList", askForListData);
 PubSub.on("GotListData", createNewList);
+PubSub.on("ListButtonsAreCreated", setupListButtons);

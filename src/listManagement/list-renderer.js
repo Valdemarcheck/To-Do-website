@@ -11,7 +11,6 @@ function renderAllLists(registry) {
   for (let list of Object.values(registry)) {
     renderList(list);
   }
-  console.log("Rendered");
 }
 
 function renderList(list) {
@@ -34,7 +33,7 @@ function renderList(list) {
   buttonsDiv.classList.add("list-buttons");
   listRow.append(buttonsDiv);
 
-  setupAllListButtons(buttonsDiv);
+  renderAllListButtons(list, buttonsDiv);
 
   const hr = document.createElement("hr");
   listDiv.append(hr);
@@ -44,22 +43,18 @@ function renderList(list) {
   listDiv.append(tasksSection);
 }
 
-function setupAllListButtons(buttonsDiv) {
-  const removeListButton = document.createElement("button");
-  removeListButton.textContent = "x";
-  buttonsDiv.append(removeListButton);
-
-  const editListButton = document.createElement("button");
-  editListButton.textContent = "edit";
-  buttonsDiv.append(editListButton);
-
-  const sortListButton = document.createElement("button");
-  sortListButton.textContent = "sort";
-  buttonsDiv.append(sortListButton);
-
-  const addTaskButton = document.createElement("button");
-  addTaskButton.textContent = "+";
-  buttonsDiv.append(addTaskButton);
+function renderAllListButtons(list, buttonsDiv) {
+  Object.values(list.buttons).forEach((button) => {
+    buttonsDiv.append(button);
+  });
 }
 
+function setupAllListButtons(list) {
+  list.RemoveListButton.textContent = "x";
+  list.EditListButton.textContent = "edit";
+  list.SortListButton.textContent = "sort";
+  list.AddTaskButton.textContent = "+";
+}
+
+PubSub.on("ListPending", setupAllListButtons);
 PubSub.on("ListRegistered", renderAllLists);
