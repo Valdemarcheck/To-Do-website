@@ -47,7 +47,7 @@ function setupAllListButtonNames(list) {
 
 function stopRenderingList(listName) {
   const listDiv = listDisplay.querySelector(`[data-list-id='${listName}']`);
-  listDisplay.remove(listDiv);
+  listDiv.remove();
 }
 
 PubSub.on("ListPending", setupAllListButtonNames);
