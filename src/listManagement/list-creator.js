@@ -7,7 +7,4 @@ function createNewList(data) {
   PubSub.emit("ListDataIsNotRequired");
 }
 
-function setupListButtons() {}
-
 PubSub.on("GotListData", createNewList);
-PubSub.on("ListButtonsAreCreated", setupListButtons);
