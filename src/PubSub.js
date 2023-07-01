@@ -38,5 +38,5 @@ export const PubSub = (() => {
     }
   }
 
-  return { events, emit, on, off };
+  return { emit, on, off };
 })();
