@@ -1,19 +1,25 @@
 const { PubSub } = require("./PubSub");
 
-const listFormBackground = document.getElementById("list-form-background");
+const MODES = { CREATION: 0, EDITING: 1 };
+
+const listForm = {
+  background: document.getElementById("list-form-background"),
+  form: document.getElementById("list-form-background").querySelector("form"),
+  mode: MODES.CREATION,
+};
 
 function openListForm() {
-  listFormBackground.style.display = "flex";
+  listForm.background.style.display = "flex";
 }
 
 function closeListForm() {
-  listFormBackground.style.display = "none";
+  listForm.background.style.display = "none";
 }
 
 function getListFormData() {
-  const listForm = listFormBackground.querySelectorAll("input");
+  const listFormInputs = listForm.background.querySelectorAll("input");
   const data = {};
-  listForm.forEach((current) => {
+  listFormInputs.forEach((current) => {
     const inputContentType = current.id;
     data[inputContentType] = current.value;
   });
@@ -21,7 +27,7 @@ function getListFormData() {
 }
 
 function resetListForm() {
-  listFormBackground.querySelector("form").reset();
+  listForm.form.reset();
 }
 
 PubSub.on("OpenListCreationForm", openListForm);
