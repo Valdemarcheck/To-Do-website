@@ -1,42 +1,32 @@
 const { PubSub } = require("../PubSub");
 
-const LIST_REGISTRY = {};
+const LIST_REGISTRY = [];
 
 function addListToRegistry(list) {
-  if (list.name in LIST_REGISTRY) {
-    list.name = makeListNameUnique(list.name);
-  }
-  LIST_REGISTRY[list.name] = list;
-  PubSub.emit("ListRegistered", list);
-  console.log(LIST_REGISTRY);
+  LIST_REGISTRY.push(list);
+  list.id = LIST_REGISTRY.length - 1;
+  const listData = { list, listId: LIST_REGISTRY.length - 1 };
+  PubSub.emit("ListRegistered", listData);
 }
 
-function makeListNameUnique(name) {
-  let index = 0;
-  while (name in LIST_REGISTRY) {
-    name = name.split(/\d$/)[0] + index;
-    index++;
+function updateListIds() {
+  for (let i = 0; i < LIST_REGISTRY.length; i++) {
+    const list = LIST_REGISTRY[i];
+    list.id = i;
+    list.div.dataset.listId = i;
   }
-  return name;
 }
 
-function removeListFromRegistry(listName) {
-  delete LIST_REGISTRY[listName];
-  console.log(LIST_REGISTRY);
+function removeListFromRegistry(list) {
+  LIST_REGISTRY.splice(list.id, 1);
+  updateListIds();
 }
 
 function editList(listData) {
-  const editableList = LIST_REGISTRY[listData.newListName];
-  const previousName = listData.newListName;
-  const newName = listData.newData.name;
-
-  for (const [key, value] of Object.entries(listData.newData)) {
+  const editableList = LIST_REGISTRY[listData.id];
+  for (const [key, value] of Object.entries(listData.data)) {
     editableList[key] = value;
   }
-  delete LIST_REGISTRY[previousName];
-  LIST_REGISTRY[newName] = editableList;
-
-  console.log(LIST_REGISTRY);
   PubSub.emit("listShouldBeRerendered", listData);
 }
 

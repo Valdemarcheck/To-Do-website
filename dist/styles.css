@@ -42,6 +42,14 @@ form {
   gap: 10px;
 }
 
+#nameIsNotUniqueDiv {
+  display: none;
+  background-color: rgb(234, 95, 95);
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
 #list-form-background {
   display: flex;
 }

@@ -2,11 +2,14 @@ import { PubSub } from "../PubSub";
 
 const listDisplay = document.getElementById("lists");
 
-function renderListUponCreation(list) {
+function renderListUponCreation(listData) {
+  const list = listData.list;
+
   const listDiv = document.createElement("div");
+  list.div = listDiv;
   listDiv.classList.add("list");
   listDiv.style.borderColor = list.color;
-  listDiv.dataset.listId = list.name;
+  listDiv.dataset.listId = listData.listId;
   listDisplay.append(listDiv);
 
   const listRow = document.createElement("div");
@@ -45,20 +48,18 @@ function setupAllListButtonNames(list) {
   list.AddTaskButton.textContent = "+";
 }
 
-function stopRenderingList(listName) {
-  const listDiv = listDisplay.querySelector(`[data-list-id='${listName}']`);
-  listDiv.remove();
+function stopRenderingList(list) {
+  list.div.remove();
 }
 
 function rerenderList(listData) {
-  const query = `[data-list-id="${listData.newListName}"]`;
+  const query = `[data-list-id="${listData.id}"]`;
 
   const listDiv = document.querySelector(query);
-  listDiv.dataset.listId = listData.newData.name;
-  listDiv.style.borderColor = listData.newData.color;
+  listDiv.style.borderColor = listData.data.color;
 
   const listNameText = listDiv.querySelector(".list-name");
-  listNameText.textContent = listData.newData.name;
+  listNameText.textContent = listData.data.name;
 }
 
 PubSub.on("ListPending", setupAllListButtonNames);

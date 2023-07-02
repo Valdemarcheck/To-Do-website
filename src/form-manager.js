@@ -31,11 +31,10 @@ function getListFormData() {
   if (listForm.mode === MODES.CREATION) {
     PubSub.emit("ListIsReadyForCreation", newData);
   } else if (listForm.mode === MODES.EDITING) {
-    const listData = {
-      newData,
-      newListName: listForm.form.dataset.editableList,
-    };
-    PubSub.emit("ListIsReadyForEditing", listData);
+    PubSub.emit("ListIsReadyForEditing", {
+      data: newData,
+      id: listForm.form.dataset.editableListId,
+    });
   }
   resetListForm();
 }
@@ -46,11 +45,12 @@ function prepareListFormForEditing(list) {
   listForm.form.querySelectorAll("input").forEach((current) => {
     current.value = list[current.id];
   });
-  listForm.form.dataset.editableList = list.name;
+  listForm.form.dataset.editableListId = list.id;
 }
 
 function resetListForm() {
   listForm.form.reset();
+  listForm.form.removeAttribute("data-editable-list-id");
   listForm.mode = MODES.CREATION;
 }
 
