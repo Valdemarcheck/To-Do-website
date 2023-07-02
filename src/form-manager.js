@@ -14,24 +14,48 @@ function openListForm() {
 
 function closeListForm() {
   listForm.background.style.display = "none";
+  if (listForm.mode !== MODES.CREATION) {
+    resetListForm();
+  }
 }
 
 function getListFormData() {
   const listFormInputs = listForm.background.querySelectorAll("input");
-  const data = {};
+  const newData = {};
+
   listFormInputs.forEach((current) => {
     const inputContentType = current.id;
-    data[inputContentType] = current.value;
+    newData[inputContentType] = current.value;
   });
-  PubSub.emit("GotListData", data);
+
+  if (listForm.mode === MODES.CREATION) {
+    PubSub.emit("ListIsReadyForCreation", newData);
+  } else if (listForm.mode === MODES.EDITING) {
+    const listData = {
+      newData,
+      newListName: listForm.form.dataset.editableList,
+    };
+    PubSub.emit("ListIsReadyForEditing", listData);
+  }
+  resetListForm();
+}
+
+function prepareListFormForEditing(list) {
+  listForm.mode = MODES.EDITING;
+
+  listForm.form.querySelectorAll("input").forEach((current) => {
+    current.value = list[current.id];
+  });
+  listForm.form.dataset.editableList = list.name;
 }
 
 function resetListForm() {
   listForm.form.reset();
+  listForm.mode = MODES.CREATION;
 }
 
-PubSub.on("OpenListCreationForm", openListForm);
-PubSub.on("CloseListCreationForm", closeListForm);
+PubSub.on("OpenListForm", openListForm);
+PubSub.on("CloseListForm", closeListForm);
 
-PubSub.on("UserWantsToCreateNewList", getListFormData);
-PubSub.on("ListDataIsNotRequired", resetListForm);
+PubSub.on("UserFinishedUsingListForm", getListFormData);
+PubSub.on("UserWantsToEditList", prepareListFormForEditing);

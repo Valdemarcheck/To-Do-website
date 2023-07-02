@@ -1,10 +1,9 @@
 import { PubSub } from "../PubSub";
 import { List } from "./list";
 
-function createNewList(data) {
-  const list = new List(data);
+function createNewList(newData) {
+  const list = new List(newData);
   PubSub.emit("ListPending", list);
-  PubSub.emit("ListDataIsNotRequired");
 }
 
-PubSub.on("GotListData", createNewList);
+PubSub.on("ListIsReadyForCreation", createNewList);

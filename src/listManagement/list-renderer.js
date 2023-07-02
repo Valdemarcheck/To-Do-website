@@ -2,7 +2,7 @@ import { PubSub } from "../PubSub";
 
 const listDisplay = document.getElementById("lists");
 
-function renderList(list) {
+function renderListUponCreation(list) {
   const listDiv = document.createElement("div");
   listDiv.classList.add("list");
   listDiv.style.borderColor = list.color;
@@ -50,6 +50,18 @@ function stopRenderingList(listName) {
   listDiv.remove();
 }
 
+function rerenderList(listData) {
+  const query = `[data-list-id="${listData.newListName}"]`;
+
+  const listDiv = document.querySelector(query);
+  listDiv.dataset.listId = listData.newData.name;
+  listDiv.style.borderColor = listData.newData.color;
+
+  const listNameText = listDiv.querySelector(".list-name");
+  listNameText.textContent = listData.newData.name;
+}
+
 PubSub.on("ListPending", setupAllListButtonNames);
-PubSub.on("ListRegistered", renderList);
+PubSub.on("ListRegistered", renderListUponCreation);
 PubSub.on("ListShouldBeRemoved", stopRenderingList);
+PubSub.on("listShouldBeRerendered", rerenderList);

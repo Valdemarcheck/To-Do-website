@@ -25,5 +25,21 @@ function removeListFromRegistry(listName) {
   console.log(LIST_REGISTRY);
 }
 
+function editList(listData) {
+  const editableList = LIST_REGISTRY[listData.newListName];
+  const previousName = listData.newListName;
+  const newName = listData.newData.name;
+
+  for (const [key, value] of Object.entries(listData.newData)) {
+    editableList[key] = value;
+  }
+  delete LIST_REGISTRY[previousName];
+  LIST_REGISTRY[newName] = editableList;
+
+  console.log(LIST_REGISTRY);
+  PubSub.emit("listShouldBeRerendered", listData);
+}
+
 PubSub.on("ListPending", addListToRegistry);
 PubSub.on("ListShouldBeRemoved", removeListFromRegistry);
+PubSub.on("ListIsReadyForEditing", editList);

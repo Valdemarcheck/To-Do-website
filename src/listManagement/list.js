@@ -13,6 +13,10 @@ export class List {
     });
     this.SortListButton = document.createElement("button");
     this.EditListButton = document.createElement("button");
+    this.EditListButton.addEventListener("click", () => {
+      PubSub.emit("UserWantsToEditList", this);
+      PubSub.emit("OpenListForm");
+    });
     this.AddTaskButton = document.createElement("button");
 
     this.buttons = {
