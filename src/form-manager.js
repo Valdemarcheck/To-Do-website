@@ -3,17 +3,16 @@ const { PubSub } = require("./PubSub");
 const MODES = { CREATION: 0, EDITING: 1 };
 export const FORM_REGISTRY = { list: "LIST", task: "TASK" };
 
-const listForm = {
-  background: document.getElementById("list-form-background"),
-  form: document.getElementById("list-form-background").querySelector("form"),
-  mode: MODES.CREATION,
-};
+const listForm = registerForm("list-form-background");
+const taskForm = registerForm("task-form-background");
 
-const taskForm = {
-  background: document.getElementById("task-form-background"),
-  form: document.getElementById("task-form-background").querySelector("form"),
-  mode: MODES.CREATION,
-};
+function registerForm(backgroundId) {
+  return {
+    background: document.getElementById(backgroundId),
+    form: document.getElementById(backgroundId).querySelector("form"),
+    mode: MODES.CREATION,
+  };
+}
 
 function getListFormData(formType) {
   const workingForm = chooseWorkingForm(formType);
