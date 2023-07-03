@@ -9,10 +9,14 @@ export class List extends DefaultList {
       PubSub.emit("UserWantsToEditList", this);
       PubSub.emit("OpenListForm");
     });
+    this.EditListButton.textContent = "edit";
+
     this.RemoveListButton = document.createElement("button");
     this.RemoveListButton.addEventListener("click", () => {
       PubSub.emit("ListShouldBeRemoved", this);
     });
+    this.RemoveListButton.textContent = "x";
+
     this.buttons.RemoveListButton = this.RemoveListButton;
     this.buttons.EditListButton = this.EditListButton;
   }
