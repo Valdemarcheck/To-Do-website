@@ -1,16 +1,16 @@
 import { PubSub } from "./PubSub";
 
-export const listCreationFormOpenButton = document.getElementById(
-  "list-creation-form-open-button"
+export const listFormOpenButton = document.getElementById(
+  "list-form-open-button"
 );
-listCreationFormOpenButton.addEventListener("click", () => {
+listFormOpenButton.addEventListener("click", () => {
   PubSub.emit("OpenListForm");
 });
 
-export const listCreationFormCloseButton = document.getElementById(
-  "list-creation-form-close-button"
+export const listFormCloseButton = document.getElementById(
+  "list-form-close-button"
 );
-listCreationFormCloseButton.addEventListener("click", () => {
+listFormCloseButton.addEventListener("click", () => {
   PubSub.emit("CloseListForm");
 });
 
@@ -19,4 +19,11 @@ export const finishUsingListFormButton =
 finishUsingListFormButton.addEventListener("click", () => {
   PubSub.emit("UserFinishedUsingListForm");
   PubSub.emit("CloseListForm");
+});
+
+export const taskFormCloseButton = document.getElementById(
+  "task-form-close-button"
+);
+taskFormCloseButton.addEventListener("click", () => {
+  PubSub.emit("CloseTaskForm");
 });

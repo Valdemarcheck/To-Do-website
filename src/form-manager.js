@@ -8,6 +8,12 @@ const listForm = {
   mode: MODES.CREATION,
 };
 
+const taskForm = {
+  background: document.getElementById("task-form-background"),
+  form: document.getElementById("task-form-background").querySelector("form"),
+  mode: MODES.CREATION,
+};
+
 function openListForm() {
   listForm.background.style.display = "flex";
 }
@@ -54,8 +60,27 @@ function resetListForm() {
   listForm.mode = MODES.CREATION;
 }
 
+function openTaskForm() {
+  taskForm.background.style.display = "flex";
+}
+
+function closeTaskForm() {
+  taskForm.background.style.display = "none";
+  if (listForm.mode !== MODES.CREATION) {
+    resetTaskForm();
+  }
+}
+
+function resetTaskForm() {
+  taskForm.form.reset();
+  taskForm.form.removeAttribute("data-editable-list-id");
+  taskForm.mode = MODES.CREATION;
+}
+
 PubSub.on("OpenListForm", openListForm);
 PubSub.on("CloseListForm", closeListForm);
-
 PubSub.on("UserFinishedUsingListForm", getListFormData);
 PubSub.on("UserWantsToEditList", prepareListFormForEditing);
+
+PubSub.on("OpenTaskForm", openTaskForm);
+PubSub.on("CloseTaskForm", closeTaskForm);

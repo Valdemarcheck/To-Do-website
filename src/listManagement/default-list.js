@@ -18,7 +18,11 @@ export class DefaultList {
 
     this.SortListButton = document.createElement("button");
     this.SortListButton.textContent = "sort";
+
     this.AddTaskButton = document.createElement("button");
+    this.AddTaskButton.addEventListener("click", () => {
+      PubSub.emit("OpenTaskForm");
+    });
     this.AddTaskButton.textContent = "+";
 
     this.buttons = {

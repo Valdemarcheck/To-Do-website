@@ -9,7 +9,7 @@ button {
   min-height: 20px;
 }
 
-#list-creation-form-open-button {
+#list-form-open-button {
   margin-top: 70px;
   margin-left: 70px;
   width: 40px;
@@ -57,7 +57,7 @@ form {
 }
 
 #task-form-background {
-  display: flex;
+  display: none;
 }
 /*  */
 /*  */
