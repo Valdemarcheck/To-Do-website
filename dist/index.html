@@ -22,9 +22,6 @@
           <h2>Create a new list</h2>
           <button id="list-creation-form-close-button" type="button">x</button>
         </div>
-        <div id="nameIsNotUniqueDiv">
-          <span>This list name is not unique!</span>
-        </div>
         <div class="row">
           <label for="name">Name</label>
           <input type="text" id="name" maxlength="20" />
@@ -39,7 +36,48 @@
       </form>
     </div>
     <div class="form-background" id="task-form-background">
-      <form id="task-creation-form"></form>
+      <form id="task-creation-form">
+        <div class="row">
+          <h2>Create a new task</h2>
+          <button id="list-creation-form-close-button" type="button">x</button>
+        </div>
+        <div class="row">
+          <label for="name">Name</label>
+          <input type="text" id="name" maxlength="20" />
+        </div>
+        <div class="row">
+          <label for="description">Description</label>
+          <textarea id="description"></textarea>
+        </div>
+        <div class="row">
+          <label for="listSelection">List</label>
+          <select id="listSelection"></select>
+        </div>
+        <div class="row">
+          <label for="dueDate">Due</label>
+          <input type="date" id="dueDate" />
+        </div>
+        <div class="row">
+          <label for="priority">Priority</label>
+          <select id="priority">
+            <option>Nah</option>
+            <option>Ok</option>
+            <option>Important</option>
+          </select>
+        </div>
+        <div id="subtasks-row">
+          <div id="subtasks header">
+            <div class="row">
+              <h2>Create subtasks</h2>
+              <button id="create-subtask-button">+</button>
+            </div>
+            <hr />
+          </div>
+        </div>
+        <div class="row">
+          <button id="create-task-button" type="button">+</button>
+        </div>
+      </form>
     </div>
   </body>
 </html>
