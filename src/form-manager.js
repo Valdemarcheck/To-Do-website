@@ -1,6 +1,7 @@
 const { PubSub } = require("./PubSub");
 
 const MODES = { CREATION: 0, EDITING: 1 };
+export const FORM_REGISTRY = { list: "LIST", task: "TASK" };
 
 const listForm = {
   background: document.getElementById("list-form-background"),
@@ -14,35 +15,57 @@ const taskForm = {
   mode: MODES.CREATION,
 };
 
-function openListForm() {
-  listForm.background.style.display = "flex";
-}
-
-function closeListForm() {
-  listForm.background.style.display = "none";
-  if (listForm.mode !== MODES.CREATION) {
-    resetListForm();
-  }
-}
-
-function getListFormData() {
-  const listFormInputs = listForm.background.querySelectorAll("input");
+function getListFormData(formType) {
+  const workingForm = chooseWorkingForm(formType);
+  const formInputs = workingForm.background.querySelectorAll("input");
   const newData = {};
 
-  listFormInputs.forEach((current) => {
+  formInputs.forEach((current) => {
     const inputContentType = current.id;
     newData[inputContentType] = current.value;
   });
 
-  if (listForm.mode === MODES.CREATION) {
-    PubSub.emit("ListIsReadyForCreation", newData);
-  } else if (listForm.mode === MODES.EDITING) {
-    PubSub.emit("ListIsReadyForEditing", {
-      data: newData,
-      id: listForm.form.dataset.editableListId,
-    });
+  if (formType === FORM_REGISTRY.list) {
+    if (workingForm.mode === MODES.CREATION) {
+      PubSub.emit("ListIsReadyForCreation", newData);
+    } else if (workingForm.mode === MODES.EDITING) {
+      PubSub.emit("ListIsReadyForEditing", {
+        data: newData,
+        id: workingForm.form.dataset.editableListId,
+      });
+    }
   }
-  resetListForm();
+  resetForm(formType);
+}
+
+function chooseWorkingForm(formType) {
+  switch (formType) {
+    case FORM_REGISTRY.list:
+      return listForm;
+    case FORM_REGISTRY.task:
+      return taskForm;
+  }
+}
+
+function resetForm(formType) {
+  const workingForm = chooseWorkingForm(formType);
+  workingForm.form.reset();
+  workingForm.form.removeAttribute("data-editable-list-id");
+  workingForm.mode = MODES.CREATION;
+}
+
+function openForm(formType) {
+  const workingForm = chooseWorkingForm(formType);
+  workingForm.background.style.display = "flex";
+}
+
+function closeForm(formType) {
+  const workingForm = chooseWorkingForm(formType);
+  workingForm.background.style.display = "none";
+
+  if (workingForm.mode !== MODES.CREATION) {
+    resetForm(formType);
+  }
 }
 
 function prepareListFormForEditing(list) {
@@ -54,33 +77,7 @@ function prepareListFormForEditing(list) {
   listForm.form.dataset.editableListId = list.id;
 }
 
-function resetListForm() {
-  listForm.form.reset();
-  listForm.form.removeAttribute("data-editable-list-id");
-  listForm.mode = MODES.CREATION;
-}
-
-function openTaskForm() {
-  taskForm.background.style.display = "flex";
-}
-
-function closeTaskForm() {
-  taskForm.background.style.display = "none";
-  if (listForm.mode !== MODES.CREATION) {
-    resetTaskForm();
-  }
-}
-
-function resetTaskForm() {
-  taskForm.form.reset();
-  taskForm.form.removeAttribute("data-editable-list-id");
-  taskForm.mode = MODES.CREATION;
-}
-
-PubSub.on("OpenListForm", openListForm);
-PubSub.on("CloseListForm", closeListForm);
-PubSub.on("UserFinishedUsingListForm", getListFormData);
+PubSub.on("OpenForm", openForm);
+PubSub.on("CloseForm", closeForm);
+PubSub.on("UserFinishedUsingForm", getListFormData);
 PubSub.on("UserWantsToEditList", prepareListFormForEditing);
-
-PubSub.on("OpenTaskForm", openTaskForm);
-PubSub.on("CloseTaskForm", closeTaskForm);

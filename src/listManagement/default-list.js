@@ -1,4 +1,5 @@
 import { PubSub } from "../PubSub";
+import { FORM_REGISTRY } from "../form-manager";
 import { TaskManager } from "../taskManagement/task-manager";
 import { TaskRegistrar } from "../taskManagement/task-registrar";
 import { TaskRenderer } from "../taskManagement/task-renderer";
@@ -21,7 +22,7 @@ export class DefaultList {
 
     this.AddTaskButton = document.createElement("button");
     this.AddTaskButton.addEventListener("click", () => {
-      PubSub.emit("OpenTaskForm");
+      PubSub.emit("OpenForm", FORM_REGISTRY.task);
     });
     this.AddTaskButton.textContent = "+";
 
