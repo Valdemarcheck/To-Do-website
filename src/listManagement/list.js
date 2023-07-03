@@ -1,31 +1,19 @@
 import { PubSub } from "../PubSub";
+import { DefaultList } from "./default-list";
 
-export class List {
-  TASK_REGISTRY = [];
-  id = null;
-  div = null;
-
+export class List extends DefaultList {
   constructor(data) {
-    this.name = data.name || "Unnamed";
-    this.color = data.color;
-
-    this.RemoveListButton = document.createElement("button");
-    this.RemoveListButton.addEventListener("click", () => {
-      PubSub.emit("ListShouldBeRemoved", this);
-    });
-    this.SortListButton = document.createElement("button");
+    super(data);
     this.EditListButton = document.createElement("button");
     this.EditListButton.addEventListener("click", () => {
       PubSub.emit("UserWantsToEditList", this);
       PubSub.emit("OpenListForm");
     });
-    this.AddTaskButton = document.createElement("button");
-
-    this.buttons = {
-      RemoveListButton: this.RemoveListButton,
-      SortListButton: this.SortListButton,
-      EditListButton: this.EditListButton,
-      AddTaskButton: this.AddTaskButton,
-    };
+    this.RemoveListButton = document.createElement("button");
+    this.RemoveListButton.addEventListener("click", () => {
+      PubSub.emit("ListShouldBeRemoved", this);
+    });
+    this.buttons.RemoveListButton = this.RemoveListButton;
+    this.buttons.EditListButton = this.EditListButton;
   }
 }

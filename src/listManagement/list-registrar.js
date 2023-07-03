@@ -10,7 +10,7 @@ function addListToRegistry(list) {
 }
 
 function updateListIds() {
-  for (let i = 0; i < LIST_REGISTRY.length; i++) {
+  for (let i = 1; i < LIST_REGISTRY.length; i++) {
     const list = LIST_REGISTRY[i];
     list.id = i;
     list.div.dataset.listId = i;

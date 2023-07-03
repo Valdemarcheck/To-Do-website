@@ -49,15 +49,19 @@ form {
   border-radius: 5px;
   color: white;
 }
-
+/*  */
+/*  */
+/*  */
 #list-form-background {
-  display: flex;
+  display: none;
 }
 
 #task-form-background {
   display: none;
 }
-
+/*  */
+/*  */
+/*  */
 .row {
   min-width: auto;
 
@@ -83,14 +87,22 @@ form {
   gap: 5px;
 }
 
+.verticalHr {
+  flex-shrink: 0;
+  width: 1px;
+  height: 100%;
+  background-color: grey;
+}
+
 #lists {
-  height: auto;
+  height: 360px;
 
   display: flex;
   gap: 10px;
 }
 
 .list {
+  height: auto;
   flex-shrink: 0;
   min-width: 240px;
   padding: 10px;
