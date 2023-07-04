@@ -7,6 +7,7 @@
 button {
   min-width: 20px;
   min-height: 20px;
+  padding: 2px;
 }
 
 #list-form-open-button {
@@ -42,13 +43,19 @@ form {
   gap: 10px;
 }
 
-#nameIsNotUniqueDiv {
-  display: none;
-  background-color: rgb(234, 95, 95);
-  padding: 5px;
-  border-radius: 5px;
-  color: white;
+.row {
+  min-width: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
+
+.row * {
+  min-width: max-content;
+}
+
 /*  */
 /*  */
 /*  */
@@ -62,18 +69,6 @@ form {
 /*  */
 /*  */
 /*  */
-.row {
-  min-width: auto;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.row * {
-  min-width: max-content;
-}
 
 #lists-section {
   margin-top: 100px;
@@ -127,7 +122,7 @@ form {
   max-width: 20ch;
 }
 
-.list-buttons {
+.buttons-row {
   padding: 2px;
 
   display: flex;
@@ -136,12 +131,23 @@ form {
   gap: 10px;
 }
 
-.tasks-section {
-  background-color: aquamarine;
+.task-section {
   width: 100%;
   min-height: 300px;
+  padding: 10px;
 
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.task-background {
+  background-color: rgb(196, 196, 196);
+  border-radius: 4px;
+  min-height: 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }

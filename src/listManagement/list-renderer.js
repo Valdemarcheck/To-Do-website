@@ -28,7 +28,7 @@ function renderListUponCreation(listData) {
   listRow.append(listNameText);
 
   const buttonsDiv = document.createElement("div");
-  buttonsDiv.classList.add("list-buttons");
+  buttonsDiv.classList.add("buttons-row");
   listRow.append(buttonsDiv);
 
   renderAllListButtons(list, buttonsDiv);
@@ -36,9 +36,9 @@ function renderListUponCreation(listData) {
   const hr = document.createElement("hr");
   listDiv.append(hr);
 
-  const tasksSection = document.createElement("div");
-  tasksSection.classList.add("tasks-section");
-  listDiv.append(tasksSection);
+  const taskSection = document.createElement("div");
+  taskSection.classList.add("task-section");
+  listDiv.append(taskSection);
 }
 
 function renderAllListButtons(list, buttonsDiv) {

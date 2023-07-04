@@ -1,15 +1,10 @@
 import { PubSub } from "../PubSub";
 import { FORM_REGISTRY } from "../form-manager";
-import { TaskManager } from "../taskManagement/task-manager";
+import { TaskCreator } from "../taskManagement/task-creator";
 import { TaskRegistrar } from "../taskManagement/task-registrar";
 import { TaskRenderer } from "../taskManagement/task-renderer";
 
 export class DefaultList {
-  TASK_REGISTRY = [];
-  taskManager = new TaskManager();
-  taskRenderer = new TaskRenderer();
-  taskRegistrar = new TaskRegistrar();
-
   id = null;
   div = null;
 
@@ -30,5 +25,28 @@ export class DefaultList {
       SortListButton: this.SortListButton,
       AddTaskButton: this.AddTaskButton,
     };
+
+    this.setupTaskHelpers();
+
+    PubSub.on("TaskIsReadyForCreation", this.establishNewTask.bind(this));
+  }
+
+  setupTaskHelpers() {
+    this.taskCreator = new TaskCreator();
+    this.taskRegistrar = new TaskRegistrar();
+    this.taskRenderer = new TaskRenderer(this.div);
+  }
+
+  establishNewTask(taskData) {
+    if (this.taskBelongsToThisList(taskData.parentList, this.name)) {
+      console.log(`Task belongs to list named ${this.name}`);
+      const task = this.taskCreator.createTask(taskData);
+      this.taskRegistrar.registerTask(task);
+      this.taskRenderer.renderTask(this.div, task);
+    }
+  }
+
+  taskBelongsToThisList(listNameTaskIsLookingFor, currentListName) {
+    return listNameTaskIsLookingFor === currentListName;
   }
 }

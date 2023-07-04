@@ -1,12 +1,14 @@
 const { PubSub } = require("./PubSub");
 
 const MODES = { CREATION: 0, EDITING: 1 };
-export const FORM_REGISTRY = { list: "LIST", task: "TASK" };
+export const FORM_REGISTRY = {};
 
-const listForm = registerForm("list-form-background");
-const taskForm = registerForm("task-form-background");
+const listForm = registerForm("list-form-background", "list");
+const taskForm = registerForm("task-form-background", "task");
+const parentList = document.getElementById("parentList");
 
-function registerForm(backgroundId) {
+function registerForm(backgroundId, codename) {
+  FORM_REGISTRY[codename] = codename;
   return {
     background: document.getElementById(backgroundId),
     form: document.getElementById(backgroundId).querySelector("form"),
@@ -14,24 +16,29 @@ function registerForm(backgroundId) {
   };
 }
 
-function getListFormData(formType) {
+function getFormData(formType) {
   const workingForm = chooseWorkingForm(formType);
-  const formInputs = workingForm.background.querySelectorAll("input");
-  const newData = {};
 
-  formInputs.forEach((current) => {
-    const inputContentType = current.id;
-    newData[inputContentType] = current.value;
+  const formInputData = {};
+  Array.from(workingForm.form.elements).forEach((element) => {
+    if (element.nodeName !== "BUTTON") {
+      const inputContentType = element.id;
+      formInputData[inputContentType] = element.value;
+    }
   });
 
   if (formType === FORM_REGISTRY.list) {
     if (workingForm.mode === MODES.CREATION) {
-      PubSub.emit("ListIsReadyForCreation", newData);
+      PubSub.emit("ListIsReadyForCreation", formInputData);
     } else if (workingForm.mode === MODES.EDITING) {
       PubSub.emit("ListIsReadyForEditing", {
-        data: newData,
+        data: formInputData,
         id: workingForm.form.dataset.editableListId,
       });
+    }
+  } else if (formType === FORM_REGISTRY.task) {
+    if (workingForm.mode === MODES.CREATION) {
+      PubSub.emit("TaskIsReadyForCreation", formInputData);
     }
   }
   resetForm(formType);
@@ -56,6 +63,9 @@ function resetForm(formType) {
 function openForm(formType) {
   const workingForm = chooseWorkingForm(formType);
   workingForm.background.style.display = "flex";
+  if (workingForm === taskForm) {
+    PubSub.emit("GetListRegistry");
+  }
 }
 
 function closeForm(formType) {
@@ -76,7 +86,17 @@ function prepareListFormForEditing(list) {
   listForm.form.dataset.editableListId = list.id;
 }
 
+function setupparentList(registry) {
+  let parentListContent = "";
+  registry.forEach((list) => {
+    parentListContent += `<option data-list-id="${list.id}">${list.name}</option>`;
+  });
+  parentList.innerHTML = parentListContent;
+}
+
 PubSub.on("OpenForm", openForm);
 PubSub.on("CloseForm", closeForm);
-PubSub.on("UserFinishedUsingForm", getListFormData);
+PubSub.on("UserFinishedUsingForm", getFormData);
 PubSub.on("UserWantsToEditList", prepareListFormForEditing);
+
+PubSub.on("ListRegistryGetsReturned", setupparentList);

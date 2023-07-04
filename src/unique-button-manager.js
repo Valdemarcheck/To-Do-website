@@ -28,3 +28,10 @@ export const taskFormCloseButton = document.getElementById(
 taskFormCloseButton.addEventListener("click", () => {
   PubSub.emit("CloseForm", FORM_REGISTRY.task);
 });
+
+export const finishUsingTaskFormButton =
+  document.getElementById("create-task-button");
+finishUsingTaskFormButton.addEventListener("click", () => {
+  PubSub.emit("UserFinishedUsingForm", FORM_REGISTRY.task);
+  PubSub.emit("CloseForm", FORM_REGISTRY.task);
+});
