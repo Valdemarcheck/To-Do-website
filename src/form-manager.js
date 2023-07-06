@@ -87,7 +87,7 @@ function prepareListFormForEditing(list) {
 }
 
 function setupParentListSelection(registry) {
-  let parentListContent = "";
+  let listSelectionContent = "";
   registry.forEach((list) => {
     listSelectionContent += `<option value="${list.id}">${list.name}</option>`;
   });
@@ -104,3 +104,4 @@ PubSub.on("UserFinishedUsingForm", getFormData);
 PubSub.on("UserWantsToEditList", prepareListFormForEditing);
 
 PubSub.on("ListRegistryGetsReturned", setupParentListSelection);
+PubSub.on("ListIdGetsReturned", setListSelectionToValue);
