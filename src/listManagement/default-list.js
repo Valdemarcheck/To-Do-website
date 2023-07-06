@@ -28,7 +28,7 @@ export class DefaultList {
     };
 
     this.setupTaskHelpers();
-
+    PubSub.on("UserWantsToDeleteTask", this.deleteTask.bind(this));
     PubSub.on("TaskIsReadyForCreation", this.establishNewTask.bind(this));
   }
 
@@ -39,10 +39,18 @@ export class DefaultList {
   }
 
   establishNewTask(taskData) {
-    if (this.taskBelongsToThisList(taskData.listSelection, this.id)) {
+    if (this.taskBelongsToThisList(taskData.parentList, this.id)) {
       const task = this.taskCreator.createTask(taskData);
       this.taskRegistrar.registerTask(task);
       this.taskRenderer.renderTask(this.div, task);
+    }
+  }
+
+  deleteTask(task) {
+    console.log(task.parentList, this.id);
+    if (this.taskBelongsToThisList(task.parentList, this.id)) {
+      this.taskRegistrar.deleteTask(task);
+      this.taskRenderer.unrenderTask(task);
     }
   }
 

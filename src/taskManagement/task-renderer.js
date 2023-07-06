@@ -9,6 +9,7 @@ export class TaskRenderer {
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("task-background");
     parentListTaskSection.append(taskDiv);
+    task.div = taskDiv;
 
     taskDiv.append(task.finishTaskCheckbox);
 
@@ -37,5 +38,9 @@ export class TaskRenderer {
     Object.values(task.buttons).forEach((button) => {
       buttonsDiv.append(button);
     });
+  }
+
+  unrenderTask(task) {
+    task.div.remove();
   }
 }

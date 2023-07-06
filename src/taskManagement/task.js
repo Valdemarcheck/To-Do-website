@@ -2,6 +2,9 @@ import { PubSub } from "../PubSub";
 
 export class Task {
   SUBTASKS = [];
+  id = null;
+  div = null;
+
   constructor(taskData) {
     this.name = taskData.name || "Unnamed";
     this.description = taskData.description;
