@@ -39,9 +39,7 @@ export class DefaultList {
   }
 
   establishNewTask(taskData) {
-    console.log(taskData);
     if (this.taskBelongsToThisList(taskData.listSelection, this.id)) {
-      console.log(`Task belongs to list named ${this.name}`);
       const task = this.taskCreator.createTask(taskData);
       this.taskRegistrar.registerTask(task);
       this.taskRenderer.renderTask(this.div, task);
@@ -49,7 +47,6 @@ export class DefaultList {
   }
 
   taskBelongsToThisList(listNameTaskIsLookingFor, currentListName) {
-    console.log(listNameTaskIsLookingFor, currentListName);
     return listNameTaskIsLookingFor === currentListName;
   }
 }

@@ -38,6 +38,11 @@ function getFormData(formType) {
     }
   } else if (formType === FORM_REGISTRY.task) {
     if (workingForm.mode === MODES.CREATION) {
+      formInputData.dueDate =
+        formInputData.dueDate === ""
+          ? new Date()
+          : new Date(formInputData.dueDate);
+
       PubSub.emit("TaskIsReadyForCreation", formInputData);
     }
   }

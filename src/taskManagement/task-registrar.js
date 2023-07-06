@@ -4,7 +4,7 @@ export class TaskRegistrar {
   constructor() {}
 
   registerTask(task) {
+    console.log(task);
     this.TASK_REGISTRY.push(task);
-    console.log("task registered");
   }
 }

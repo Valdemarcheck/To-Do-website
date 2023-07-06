@@ -1,3 +1,5 @@
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import isFuture from "date-fns/isFuture";
 export class TaskRenderer {
   construct() {}
 
@@ -7,11 +9,22 @@ export class TaskRenderer {
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("task-background");
     parentListTaskSection.append(taskDiv);
-    console.log(parentListTaskSection);
+
+    taskDiv.append(task.finishTaskCheckbox);
 
     const taskNameText = document.createElement("p");
     taskNameText.textContent = task.name;
     taskDiv.append(taskNameText);
+
+    const taskDueDate = document.createElement("p");
+    taskDueDate.textContent = formatDistanceToNow(task.dueDate);
+    taskDueDate.classList.add("due-date");
+    if (isFuture(task.dueDate)) {
+      taskDueDate.classList.add("not-postponed");
+    } else {
+      taskDueDate.classList.add("postponed");
+    }
+    taskDiv.append(taskDueDate);
 
     const buttonsDiv = document.createElement("div");
     buttonsDiv.classList.add("buttons-row");

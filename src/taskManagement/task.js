@@ -5,10 +5,11 @@ export class Task {
   constructor(taskData) {
     this.name = taskData.name || "Unnamed";
     this.description = taskData.description;
-    this.due = taskData.due;
+    this.dueDate = new Date(taskData.dueDate) || new Date();
     this.priority = taskData.priority;
     this.parentList = taskData.parentList;
-    this.finishTaskCheckbox = document.createElement("checkbox");
+    this.finishTaskCheckbox = document.createElement("input");
+    this.finishTaskCheckbox.setAttribute("type", "checkbox");
     this.finishTaskCheckbox.addEventListener("change", (e) => {
       if (e.currentTarget.checked) {
         PubSub.emit("TaskChecked", this);
@@ -24,7 +25,7 @@ export class Task {
     this.DeleteTaskButton = document.createElement("button");
     this.DeleteTaskButton.textContent = "x";
     this.DeleteTaskButton.addEventListener("click", () => {
-      // PubSub.emit("UserWantsToDeleteTask");
+      PubSub.emit("UserWantsToDeleteTask", this);
     });
 
     this.buttons = {
