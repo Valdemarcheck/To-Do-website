@@ -5,7 +5,7 @@ export const FORM_REGISTRY = {};
 
 const listForm = registerForm("list-form-background", "list");
 const taskForm = registerForm("task-form-background", "task");
-const parentList = document.getElementById("parentList");
+const listSelection = document.getElementById("listSelection");
 
 function registerForm(backgroundId, codename) {
   FORM_REGISTRY[codename] = codename;
@@ -86,12 +86,16 @@ function prepareListFormForEditing(list) {
   listForm.form.dataset.editableListId = list.id;
 }
 
-function setupparentList(registry) {
-  let parentListContent = "";
+function setuplistSelection(registry) {
+  let listSelectionContent = "";
   registry.forEach((list) => {
-    parentListContent += `<option data-list-id="${list.id}">${list.name}</option>`;
+    listSelectionContent += `<option value="${list.id}">${list.name}</option>`;
   });
-  parentList.innerHTML = parentListContent;
+  listSelection.innerHTML = listSelectionContent;
+}
+
+function setListSelectionToValue(id) {
+  listSelection.value = id;
 }
 
 PubSub.on("OpenForm", openForm);
@@ -99,4 +103,5 @@ PubSub.on("CloseForm", closeForm);
 PubSub.on("UserFinishedUsingForm", getFormData);
 PubSub.on("UserWantsToEditList", prepareListFormForEditing);
 
-PubSub.on("ListRegistryGetsReturned", setupparentList);
+PubSub.on("ListRegistryGetsReturned", setuplistSelection);
+PubSub.on("ListIdGetsReturned", setListSelectionToValue);

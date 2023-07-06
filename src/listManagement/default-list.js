@@ -18,6 +18,7 @@ export class DefaultList {
     this.AddTaskButton = document.createElement("button");
     this.AddTaskButton.addEventListener("click", () => {
       PubSub.emit("OpenForm", FORM_REGISTRY.task);
+      PubSub.emit("ListIdGetsReturned", this.id);
     });
     this.AddTaskButton.textContent = "+";
 
