@@ -37,13 +37,21 @@ function getFormData(formType) {
       });
     }
   } else if (formType === FORM_REGISTRY.task) {
+    formInputData.dueDate =
+      formInputData.dueDate === ""
+        ? new Date()
+        : new Date(formInputData.dueDate);
     if (workingForm.mode === MODES.CREATION) {
-      formInputData.dueDate =
-        formInputData.dueDate === ""
-          ? new Date()
-          : new Date(formInputData.dueDate);
-
       PubSub.emit("TaskIsReadyForCreation", formInputData);
+    } else if (workingForm.mode === MODES.EDITING) {
+      const path = workingForm.form.dataset.editableTaskId.split(":");
+      PubSub.emit("TaskIsReadyForEditing", {
+        data: formInputData,
+        path: {
+          listId: path[0],
+          taskId: path[1],
+        },
+      });
     }
   }
   resetForm(formType);
@@ -82,6 +90,18 @@ function closeForm(formType) {
   }
 }
 
+function setupParentListSelection(registry) {
+  let parentListContent = "";
+  registry.forEach((list) => {
+    parentListContent += `<option value="${list.id}">${list.name}</option>`;
+  });
+  parentList.innerHTML = parentListContent;
+}
+
+function setParentListSelectionToValue(id) {
+  parentList.value = id;
+}
+
 function prepareListFormForEditing(list) {
   listForm.mode = MODES.EDITING;
 
@@ -91,16 +111,13 @@ function prepareListFormForEditing(list) {
   listForm.form.dataset.editableListId = list.id;
 }
 
-function setupParentparentList(registry) {
-  let parentListContent = "";
-  registry.forEach((list) => {
-    parentListContent += `<option value="${list.id}">${list.name}</option>`;
-  });
-  parentList.innerHTML = parentListContent;
-}
+function prepareTaskFormForEditing(task) {
+  taskForm.mode = MODES.EDITING;
 
-function setparentListToValue(id) {
-  parentList.value = id;
+  taskForm.form.querySelectorAll("input").forEach((current) => {
+    current.value = task[current.id];
+  });
+  taskForm.form.dataset.editableTaskId = `${task.parentList}:${task.id}`;
 }
 
 PubSub.on("OpenForm", openForm);
@@ -108,5 +125,7 @@ PubSub.on("CloseForm", closeForm);
 PubSub.on("UserFinishedUsingForm", getFormData);
 PubSub.on("UserWantsToEditList", prepareListFormForEditing);
 
-PubSub.on("ListRegistryGetsReturned", setupParentparentList);
-PubSub.on("ListIdGetsReturned", setparentListToValue);
+PubSub.on("ListRegistryGetsReturned", setupParentListSelection);
+PubSub.on("ListIdGetsReturned", setParentListSelectionToValue);
+
+PubSub.on("UserWantsToEditTask", prepareTaskFormForEditing);

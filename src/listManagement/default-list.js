@@ -28,8 +28,9 @@ export class DefaultList {
     };
 
     this.setupTaskHelpers();
-    PubSub.on("UserWantsToDeleteTask", this.deleteTask.bind(this));
     PubSub.on("TaskIsReadyForCreation", this.establishNewTask.bind(this));
+    PubSub.on("TaskIsReadyForEditing", this.editTask.bind(this));
+    PubSub.on("UserWantsToDeleteTask", this.deleteTask.bind(this));
   }
 
   setupTaskHelpers() {
@@ -46,15 +47,22 @@ export class DefaultList {
     }
   }
 
+  editTask(taskData) {
+    if (this.taskBelongsToThisList(taskData.path.listId, this.id)) {
+      const editedTask = this.taskRegistrar.editTask(taskData);
+      this.taskRenderer.rerenderTask(this.div, editedTask);
+    }
+  }
+
   deleteTask(task) {
     console.log(task.parentList, this.id);
     if (this.taskBelongsToThisList(task.parentList, this.id)) {
       this.taskRegistrar.deleteTask(task);
-      this.taskRenderer.unrenderTask(task);
+      this.taskRenderer.stopRenderingTask(task);
     }
   }
 
   taskBelongsToThisList(listNameTaskIsLookingFor, currentListName) {
-    return listNameTaskIsLookingFor === currentListName;
+    return listNameTaskIsLookingFor == currentListName;
   }
 }

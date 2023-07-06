@@ -15,6 +15,14 @@ export class TaskRegistrar {
     });
   }
 
+  editTask(taskData) {
+    const editableTask = this.TASK_REGISTRY[taskData.path.taskId];
+    for (const [key, value] of Object.entries(taskData.data)) {
+      editableTask[key] = value;
+    }
+    return editableTask;
+  }
+
   deleteTask(task) {
     this.TASK_REGISTRY.splice(task.id, 1);
     this.updateIds();

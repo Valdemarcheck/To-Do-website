@@ -1,4 +1,5 @@
 import { PubSub } from "../PubSub";
+import { FORM_REGISTRY } from "../form-manager";
 
 export class Task {
   SUBTASKS = [];
@@ -23,7 +24,8 @@ export class Task {
     this.EditTaskButton = document.createElement("button");
     this.EditTaskButton.textContent = "edit";
     this.EditTaskButton.addEventListener("click", () => {
-      // PubSub.emit("UserWantsToEditTask", this);
+      PubSub.emit("UserWantsToEditTask", this);
+      PubSub.emit("OpenForm", FORM_REGISTRY.task);
     });
     this.DeleteTaskButton = document.createElement("button");
     this.DeleteTaskButton.textContent = "x";

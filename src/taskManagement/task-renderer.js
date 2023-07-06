@@ -14,6 +14,7 @@ export class TaskRenderer {
     taskDiv.append(task.finishTaskCheckbox);
 
     const taskNameText = document.createElement("p");
+    taskNameText.classList.add("task-name");
     taskNameText.textContent = task.name;
     taskDiv.append(taskNameText);
 
@@ -40,7 +41,22 @@ export class TaskRenderer {
     });
   }
 
-  unrenderTask(task) {
+  stopRenderingTask(task) {
     task.div.remove();
+  }
+
+  rerenderTask(taskDiv, task) {
+    const taskNameText = taskDiv.querySelector(".task-name");
+    taskNameText.textContent = task.name;
+
+    const taskDueDate = taskDiv.querySelector(".due-date");
+    taskDueDate.textContent = formatDistanceToNow(task.dueDate);
+    if (isFuture(task.dueDate)) {
+      taskDueDate.classList.add("not-postponed");
+      taskDueDate.classList.remove("postponed");
+    } else {
+      taskDueDate.classList.add("postponed");
+      taskDueDate.classList.remove("not-postponed");
+    }
   }
 }
