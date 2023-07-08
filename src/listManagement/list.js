@@ -1,6 +1,6 @@
 import { PubSub } from "../PubSub";
-import { FORM_REGISTRY } from "../form-manager";
-import listUtils from "./list-utilities";
+import { FORM_REGISTRY } from "../formManagement/form-manager";
+import * as listUtils from "./list-utilities";
 
 export class List {
   id = null;
