@@ -52,7 +52,7 @@ export function addNonDefaultListButtons(list) {
   list.ShowListInformationButton.addEventListener("click", () => {
     PubSub.emit("UserWantsToSeeEntityInformation", {
       formType: FORM_REGISTRY.List,
-      entity: this,
+      entity: list,
     });
     PubSub.emit("OpenForm", FORM_REGISTRY.List);
   });
