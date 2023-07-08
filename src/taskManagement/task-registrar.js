@@ -6,7 +6,6 @@ export class TaskRegistrar {
   registerTask(task) {
     this.TASK_REGISTRY.push(task);
     task.id = this.TASK_REGISTRY.length - 1;
-    console.log(this.TASK_REGISTRY);
   }
 
   updateIds() {

@@ -3,12 +3,20 @@ const { PubSub } = require("./PubSub");
 const MODES = { CREATION: 0, EDITING: 1 };
 export const FORM_REGISTRY = {};
 
-const listForm = registerForm("list-form-background", "list");
-const taskForm = registerForm("task-form-background", "task");
+const listForm = registerForm("list-form-background", "List");
+const taskForm = registerForm("task-form-background", "Task");
 const parentList = document.getElementById("parentList");
 
 function trimInput(inputValue) {
   return inputValue.trim();
+}
+
+function getEntityPath(workingForm, formType) {
+  const datasetQuery = `editable${formType}Id`;
+  const editableEntityId = workingForm.form.dataset[datasetQuery];
+  const pathArray = editableEntityId.split(":");
+  const path = { listId: pathArray[0], taskId: pathArray[1] };
+  return path;
 }
 
 function registerForm(backgroundId, codename) {
@@ -31,16 +39,21 @@ function getFormData(formType) {
     }
   });
 
-  if (formType === FORM_REGISTRY.list) {
+  let path =
+    workingForm.mode === MODES.EDITING
+      ? getEntityPath(workingForm, formType)
+      : null;
+
+  if (formType === FORM_REGISTRY.List) {
     if (workingForm.mode === MODES.CREATION) {
       PubSub.emit("ListIsReadyForCreation", formInputData);
     } else if (workingForm.mode === MODES.EDITING) {
       PubSub.emit("ListIsReadyForEditing", {
         data: formInputData,
-        id: workingForm.form.dataset.editableListId,
+        path,
       });
     }
-  } else if (formType === FORM_REGISTRY.task) {
+  } else if (formType === FORM_REGISTRY.Task) {
     formInputData.dueDate =
       formInputData.dueDate === ""
         ? new Date()
@@ -48,13 +61,9 @@ function getFormData(formType) {
     if (workingForm.mode === MODES.CREATION) {
       PubSub.emit("TaskIsReadyForCreation", formInputData);
     } else if (workingForm.mode === MODES.EDITING) {
-      const path = workingForm.form.dataset.editableTaskId.split(":");
       PubSub.emit("TaskIsReadyForEditing", {
         data: formInputData,
-        path: {
-          listId: path[0],
-          taskId: path[1],
-        },
+        path,
       });
     }
   }
@@ -63,9 +72,9 @@ function getFormData(formType) {
 
 function chooseWorkingForm(formType) {
   switch (formType) {
-    case FORM_REGISTRY.list:
+    case FORM_REGISTRY.List:
       return listForm;
-    case FORM_REGISTRY.task:
+    case FORM_REGISTRY.Task:
       return taskForm;
   }
 }

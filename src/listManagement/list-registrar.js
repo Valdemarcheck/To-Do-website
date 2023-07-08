@@ -24,7 +24,7 @@ function removeListFromRegistry(list) {
 }
 
 function editList(listData) {
-  const editableList = LIST_REGISTRY[listData.id];
+  const editableList = LIST_REGISTRY[listData.path.listId];
   for (const [key, value] of Object.entries(listData.data)) {
     editableList[key] = value;
   }

@@ -15,7 +15,7 @@ export class List {
 
     this.AddTaskButton = document.createElement("button");
     this.AddTaskButton.addEventListener("click", () => {
-      PubSub.emit("OpenForm", FORM_REGISTRY.task);
+      PubSub.emit("OpenForm", FORM_REGISTRY.Task);
       PubSub.emit("ListIdGetsReturned", this.id);
     });
     this.AddTaskButton.textContent = "+";
@@ -36,7 +36,7 @@ export function addRemoveAndEditButtons(list) {
   list.EditListButton = document.createElement("button");
   list.EditListButton.addEventListener("click", () => {
     PubSub.emit("UserWantsToEditList", list);
-    PubSub.emit("OpenForm", FORM_REGISTRY.list);
+    PubSub.emit("OpenForm", FORM_REGISTRY.List);
   });
   list.EditListButton.textContent = "edit";
 

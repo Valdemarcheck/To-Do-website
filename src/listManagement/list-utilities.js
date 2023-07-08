@@ -11,7 +11,6 @@ export default (() => {
 
   function establishNewTask(taskData) {
     if (taskBelongsToThisList(taskData.parentList, this.id)) {
-      console.log(this);
       const task = this.taskCreator.createTask(taskData);
       this.taskRegistrar.registerTask(task);
       this.taskRenderer.renderTask(this.div, task);
@@ -19,7 +18,6 @@ export default (() => {
   }
 
   function editTask(taskData) {
-    console.log(taskData);
     if (taskBelongsToThisList(taskData.path.listId, this.id)) {
       const editedTask = this.taskRegistrar.editTask(taskData);
       this.taskRenderer.rerenderTask(this.div, editedTask);

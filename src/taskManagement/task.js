@@ -25,7 +25,7 @@ export class Task {
     this.EditTaskButton.textContent = "edit";
     this.EditTaskButton.addEventListener("click", () => {
       PubSub.emit("UserWantsToEditTask", this);
-      PubSub.emit("OpenForm", FORM_REGISTRY.task);
+      PubSub.emit("OpenForm", FORM_REGISTRY.Task);
     });
     this.DeleteTaskButton = document.createElement("button");
     this.DeleteTaskButton.textContent = "x";

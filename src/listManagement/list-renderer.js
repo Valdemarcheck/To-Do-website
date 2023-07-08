@@ -52,7 +52,7 @@ function stopRenderingList(list) {
 }
 
 function rerenderList(listData) {
-  const query = `[data-list-id="${listData.id}"]`;
+  const query = `[data-list-id="${listData.path.listId}"]`;
 
   const listDiv = document.querySelector(query);
   listDiv.style.borderColor = listData.data.color;
