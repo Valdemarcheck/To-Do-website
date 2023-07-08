@@ -51,24 +51,13 @@ function getFormData(formType) {
   //       : new Date(formInputData.dueDate);
   // }
 
-  if (formType === FORM_REGISTRY.List) {
-    if (workingForm.mode === MODES.CREATION) {
-      PubSub.emit("ListIsReadyForCreation", formInputData);
-    } else if (workingForm.mode === MODES.EDITING) {
-      PubSub.emit("ListIsReadyForEditing", {
-        data: formInputData,
-        path,
-      });
-    }
-  } else if (formType === FORM_REGISTRY.Task) {
-    if (workingForm.mode === MODES.CREATION) {
-      PubSub.emit("TaskIsReadyForCreation", formInputData);
-    } else if (workingForm.mode === MODES.EDITING) {
-      PubSub.emit("TaskIsReadyForEditing", {
-        data: formInputData,
-        path,
-      });
-    }
+  if (workingForm.mode === MODES.CREATION) {
+    PubSub.emit(formType + "IsReadyForCreation", formInputData);
+  } else if (workingForm.mode === MODES.EDITING) {
+    PubSub.emit(formType + "IsReadyForEditing", {
+      data: formInputData,
+      path,
+    });
   }
   resetForm(formType);
 }
