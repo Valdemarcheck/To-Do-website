@@ -1,4 +1,5 @@
 import { PubSub } from "../PubSub";
+import { setupButton } from "../utilities";
 import { List } from "./list";
 
 export const DEFAULT_LIST_ID = "DEFAULT";
@@ -18,21 +19,33 @@ function createNewList(newData) {
 }
 
 function addNonDefaultListButtons(list) {
-  list.EditListButton = document.createElement("button");
+  list.EditListButton = setupButton(
+    "edit",
+    "edit-button",
+    list,
+    "EditListButton"
+  );
   list.EditListButton.addEventListener("click", () => {
     PubSub.emit("UserWantsToEditList", list);
     PubSub.emit("OpenForm", FORM_REGISTRY.List);
   });
-  list.EditListButton.textContent = "edit";
 
-  list.RemoveListButton = document.createElement("button");
+  list.RemoveListButton = setupButton(
+    "x",
+    "remove-button",
+    list,
+    "RemoveListButton"
+  );
   list.RemoveListButton.addEventListener("click", () => {
     PubSub.emit("ListShouldBeRemoved", list);
   });
-  list.RemoveListButton.textContent = "x";
 
-  list.ShowListInformationButton = document.createElement("button");
-  list.ShowListInformationButton.classList.add("informationButton");
+  list.ShowListInformationButton = setupButton(
+    "info",
+    "information-button",
+    list,
+    "ShowListInformationButton"
+  );
   list.ShowListInformationButton.addEventListener("click", () => {
     PubSub.emit("UserWantsToSeeEntityInformation", {
       formType: FORM_REGISTRY.List,
@@ -40,11 +53,6 @@ function addNonDefaultListButtons(list) {
     });
     PubSub.emit("OpenForm", FORM_REGISTRY.List);
   });
-  list.ShowListInformationButton.textContent = "info";
-
-  list.buttons.ShowListInformationButton = list.ShowListInformationButton;
-  list.buttons.EditListButton = list.EditListButton;
-  list.buttons.RemoveListButton = list.RemoveListButton;
 }
 
 PubSub.on("ListIsReadyForCreation", createNewList);

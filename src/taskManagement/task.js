@@ -1,10 +1,12 @@
 import { PubSub } from "../PubSub";
 import { FORM_REGISTRY } from "../formManagement/form-manager";
+import { setupButton } from "../utilities";
 
 export class Task {
   SUBTASKS = [];
   id = null;
   div = null;
+  buttons = {};
 
   constructor(taskData) {
     this.name = taskData.name || "Unnamed";
@@ -23,8 +25,12 @@ export class Task {
       }
     });
 
-    this.ShowTaskInformationButton = document.createElement("button");
-    this.ShowTaskInformationButton.classList.add("informationButton");
+    this.ShowTaskInformationButton = setupButton(
+      "info",
+      "information-button",
+      this,
+      "ShowTaskInformationButton"
+    );
     this.ShowTaskInformationButton.addEventListener("click", () => {
       PubSub.emit("UserWantsToSeeEntityInformation", {
         formType: FORM_REGISTRY.Task,
@@ -32,25 +38,26 @@ export class Task {
       });
       PubSub.emit("OpenForm", FORM_REGISTRY.Task);
     });
-    this.ShowTaskInformationButton.textContent = "info";
 
-    this.EditTaskButton = document.createElement("button");
-    this.EditTaskButton.textContent = "edit";
+    this.EditTaskButton = setupButton(
+      "edit",
+      "edit-button",
+      this,
+      "EditTaskButton"
+    );
     this.EditTaskButton.addEventListener("click", () => {
       PubSub.emit("UserWantsToEditTask", this);
       PubSub.emit("OpenForm", FORM_REGISTRY.Task);
     });
 
-    this.DeleteTaskButton = document.createElement("button");
-    this.DeleteTaskButton.textContent = "x";
+    this.DeleteTaskButton = setupButton(
+      "x",
+      "delete-button",
+      this,
+      "DeleteTaskButton"
+    );
     this.DeleteTaskButton.addEventListener("click", () => {
       PubSub.emit("UserWantsToDeleteTask", this);
     });
-
-    this.buttons = {
-      ShowTaskInformationButton: this.ShowTaskInformationButton,
-      EditTaskButton: this.EditTaskButton,
-      DeleteTaskButton: this.DeleteTaskButton,
-    };
   }
 }
