@@ -19,13 +19,13 @@ export class TaskRenderer {
     taskDiv.append(taskNameText);
 
     const taskDueDate = document.createElement("p");
-    taskDueDate.textContent = formatDistanceToNow(task.dueDate);
+    taskDueDate.textContent = task.dueDate;
     taskDueDate.classList.add("due-date");
-    if (isFuture(task.dueDate)) {
-      taskDueDate.classList.add("not-postponed");
-    } else {
-      taskDueDate.classList.add("postponed");
-    }
+    // if (isFuture(task.dueDate)) {
+    //   taskDueDate.classList.add("not-postponed");
+    // } else {
+    //   taskDueDate.classList.add("postponed");
+    // }
     taskDiv.append(taskDueDate);
 
     const buttonsDiv = document.createElement("div");
@@ -45,18 +45,20 @@ export class TaskRenderer {
     task.div.remove();
   }
 
-  rerenderTask(taskDiv, task) {
+  rerenderTask(task) {
+    const taskDiv = task.div;
+
     const taskNameText = taskDiv.querySelector(".task-name");
     taskNameText.textContent = task.name;
 
     const taskDueDate = taskDiv.querySelector(".due-date");
-    taskDueDate.textContent = formatDistanceToNow(task.dueDate);
-    if (isFuture(task.dueDate)) {
-      taskDueDate.classList.add("not-postponed");
-      taskDueDate.classList.remove("postponed");
-    } else {
-      taskDueDate.classList.add("postponed");
-      taskDueDate.classList.remove("not-postponed");
-    }
+    taskDueDate.textContent = task.dueDate;
+    // if (isFuture(task.dueDate)) {
+    //   taskDueDate.classList.add("not-postponed");
+    //   taskDueDate.classList.remove("postponed");
+    // } else {
+    //   taskDueDate.classList.add("postponed");
+    //   taskDueDate.classList.remove("not-postponed");
+    // }
   }
 }

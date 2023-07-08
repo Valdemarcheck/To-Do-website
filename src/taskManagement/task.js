@@ -9,7 +9,7 @@ export class Task {
   constructor(taskData) {
     this.name = taskData.name || "Unnamed";
     this.description = taskData.description;
-    this.dueDate = new Date(taskData.dueDate) || new Date();
+    this.dueDate = taskData.dueDate;
     this.priority = taskData.priority;
     this.parentList = taskData.parentList;
     this.finishTaskCheckbox = document.createElement("input");

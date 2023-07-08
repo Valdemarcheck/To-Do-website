@@ -19,6 +19,7 @@ export class TaskRegistrar {
     for (const [key, value] of Object.entries(taskData.data)) {
       editableTask[key] = value;
     }
+    console.log(editableTask, editableTask.id);
     return editableTask;
   }
 

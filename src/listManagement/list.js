@@ -31,21 +31,3 @@ export class List {
     PubSub.on("UserWantsToDeleteTask", listUtils.deleteTask.bind(this));
   }
 }
-
-export function addRemoveAndEditButtons(list) {
-  list.EditListButton = document.createElement("button");
-  list.EditListButton.addEventListener("click", () => {
-    PubSub.emit("UserWantsToEditList", list);
-    PubSub.emit("OpenForm", FORM_REGISTRY.List);
-  });
-  list.EditListButton.textContent = "edit";
-
-  list.RemoveListButton = document.createElement("button");
-  list.RemoveListButton.addEventListener("click", () => {
-    PubSub.emit("ListShouldBeRemoved", list);
-  });
-  list.RemoveListButton.textContent = "x";
-
-  list.buttons.RemoveListButton = list.RemoveListButton;
-  list.buttons.EditListButton = list.EditListButton;
-}

@@ -39,10 +39,17 @@ function getFormData(formType) {
     }
   });
 
-  let path =
-    workingForm.mode === MODES.EDITING
-      ? getEntityPath(workingForm, formType)
-      : null;
+  let path = null;
+  if (workingForm.mode === MODES.EDITING) {
+    path = getEntityPath(workingForm, formType);
+  }
+
+  // if (formType === FORM_REGISTRY.Task) {
+  //   formInputData.dueDate =
+  //     formInputData.dueDate === ""
+  //       ? new Date()
+  //       : new Date(formInputData.dueDate);
+  // }
 
   if (formType === FORM_REGISTRY.List) {
     if (workingForm.mode === MODES.CREATION) {
@@ -54,10 +61,6 @@ function getFormData(formType) {
       });
     }
   } else if (formType === FORM_REGISTRY.Task) {
-    formInputData.dueDate =
-      formInputData.dueDate === ""
-        ? new Date()
-        : new Date(formInputData.dueDate);
     if (workingForm.mode === MODES.CREATION) {
       PubSub.emit("TaskIsReadyForCreation", formInputData);
     } else if (workingForm.mode === MODES.EDITING) {

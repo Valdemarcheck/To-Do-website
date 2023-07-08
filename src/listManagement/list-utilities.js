@@ -20,7 +20,7 @@ export default (() => {
   function editTask(taskData) {
     if (taskBelongsToThisList(taskData.path.listId, this.id)) {
       const editedTask = this.taskRegistrar.editTask(taskData);
-      this.taskRenderer.rerenderTask(this.div, editedTask);
+      this.taskRenderer.rerenderTask(editedTask);
     }
   }
 
@@ -32,9 +32,33 @@ export default (() => {
     }
   }
 
-  return { setupTaskHelpers, establishNewTask, editTask, deleteTask };
-})();
+  function addRemoveAndEditButtons(list) {
+    list.EditListButton = document.createElement("button");
+    list.EditListButton.addEventListener("click", () => {
+      PubSub.emit("UserWantsToEditList", list);
+      PubSub.emit("OpenForm", FORM_REGISTRY.List);
+    });
+    list.EditListButton.textContent = "edit";
 
-function taskBelongsToThisList(listNameTaskIsLookingFor, currentListName) {
-  return listNameTaskIsLookingFor == currentListName;
-}
+    list.RemoveListButton = document.createElement("button");
+    list.RemoveListButton.addEventListener("click", () => {
+      PubSub.emit("ListShouldBeRemoved", list);
+    });
+    list.RemoveListButton.textContent = "x";
+
+    list.buttons.RemoveListButton = list.RemoveListButton;
+    list.buttons.EditListButton = list.EditListButton;
+  }
+
+  function taskBelongsToThisList(listNameTaskIsLookingFor, currentListName) {
+    return listNameTaskIsLookingFor == currentListName;
+  }
+
+  return {
+    setupTaskHelpers,
+    establishNewTask,
+    editTask,
+    deleteTask,
+    addRemoveAndEditButtons,
+  };
+})();

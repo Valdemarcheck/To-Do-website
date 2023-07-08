@@ -1,5 +1,6 @@
 import { PubSub } from "../PubSub";
-import { List, addRemoveAndEditButtons } from "./list";
+import { List } from "./list";
+import listUtils from "./list-utilities";
 
 export const DEFAULT_LIST_ID = "DEFAULT";
 
@@ -13,7 +14,7 @@ function createDefaultList() {
 
 function createNewList(newData) {
   const list = new List(newData);
-  addRemoveAndEditButtons(list);
+  listUtils.addRemoveAndEditButtons(list);
   PubSub.emit("ListPending", list);
 }
 
