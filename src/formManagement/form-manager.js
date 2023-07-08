@@ -1,4 +1,5 @@
-const { PubSub } = require("./PubSub");
+const { PubSub } = require("../PubSub");
+import * as formUtilities from "./form-utilities";
 
 const MODES = { CREATION: 0, EDITING: 1 };
 export const FORM_REGISTRY = {};
@@ -6,18 +7,6 @@ export const FORM_REGISTRY = {};
 const listForm = registerForm("list-form-background", "List");
 const taskForm = registerForm("task-form-background", "Task");
 const parentList = document.getElementById("parentList");
-
-function trimInput(inputValue) {
-  return inputValue.trim();
-}
-
-function getEntityPath(workingForm, formType) {
-  const datasetQuery = `editable${formType}Id`;
-  const editableEntityId = workingForm.form.dataset[datasetQuery];
-  const pathArray = editableEntityId.split(":");
-  const path = { listId: pathArray[0], taskId: pathArray[1] };
-  return path;
-}
 
 function registerForm(backgroundId, codename) {
   FORM_REGISTRY[codename] = codename;
@@ -35,13 +24,13 @@ function getFormData(formType) {
   Array.from(workingForm.form.elements).forEach((element) => {
     if (element.nodeName !== "BUTTON") {
       const inputContentType = element.id;
-      formInputData[inputContentType] = trimInput(element.value);
+      formInputData[inputContentType] = formUtilities.trimInput(element.value);
     }
   });
 
   let path = null;
   if (workingForm.mode === MODES.EDITING) {
-    path = getEntityPath(workingForm, formType);
+    path = formUtilities.getEntityPath(workingForm, formType);
   }
 
   // if (formType === FORM_REGISTRY.Task) {

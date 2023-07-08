@@ -1,5 +1,5 @@
 import { PubSub } from "../PubSub";
-import { FORM_REGISTRY } from "../form-manager";
+import { FORM_REGISTRY } from "../formManagement/form-manager";
 
 export class Task {
   SUBTASKS = [];
