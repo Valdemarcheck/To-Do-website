@@ -7,6 +7,10 @@ const listForm = registerForm("list-form-background", "list");
 const taskForm = registerForm("task-form-background", "task");
 const parentList = document.getElementById("parentList");
 
+function trimInput(inputValue) {
+  return inputValue.trim();
+}
+
 function registerForm(backgroundId, codename) {
   FORM_REGISTRY[codename] = codename;
   return {
@@ -23,7 +27,7 @@ function getFormData(formType) {
   Array.from(workingForm.form.elements).forEach((element) => {
     if (element.nodeName !== "BUTTON") {
       const inputContentType = element.id;
-      formInputData[inputContentType] = element.value;
+      formInputData[inputContentType] = trimInput(element.value);
     }
   });
 
