@@ -1,8 +1,6 @@
 import { PubSub } from "../PubSub";
 import { FORM_REGISTRY } from "../form-manager";
-import { TaskCreator } from "../taskManagement/task-creator";
-import { TaskRegistrar } from "../taskManagement/task-registrar";
-import { TaskRenderer } from "../taskManagement/task-renderer";
+import listUtils from "./list-utilities";
 
 export class List {
   id = null;
@@ -27,43 +25,10 @@ export class List {
       AddTaskButton: this.AddTaskButton,
     };
 
-    this.setupTaskHelpers();
-    PubSub.on("TaskIsReadyForCreation", this.establishNewTask.bind(this));
-    PubSub.on("TaskIsReadyForEditing", this.editTask.bind(this));
-    PubSub.on("UserWantsToDeleteTask", this.deleteTask.bind(this));
-  }
-
-  setupTaskHelpers() {
-    this.taskCreator = new TaskCreator();
-    this.taskRegistrar = new TaskRegistrar();
-    this.taskRenderer = new TaskRenderer(this.div);
-  }
-
-  establishNewTask(taskData) {
-    if (this.taskBelongsToThisList(taskData.parentList, this.id)) {
-      const task = this.taskCreator.createTask(taskData);
-      this.taskRegistrar.registerTask(task);
-      this.taskRenderer.renderTask(this.div, task);
-    }
-  }
-
-  editTask(taskData) {
-    if (this.taskBelongsToThisList(taskData.path.listId, this.id)) {
-      const editedTask = this.taskRegistrar.editTask(taskData);
-      this.taskRenderer.rerenderTask(this.div, editedTask);
-    }
-  }
-
-  deleteTask(task) {
-    console.log(task.parentList, this.id);
-    if (this.taskBelongsToThisList(task.parentList, this.id)) {
-      this.taskRegistrar.deleteTask(task);
-      this.taskRenderer.stopRenderingTask(task);
-    }
-  }
-
-  taskBelongsToThisList(listNameTaskIsLookingFor, currentListName) {
-    return listNameTaskIsLookingFor == currentListName;
+    listUtils.setupTaskHelpers(this);
+    PubSub.on("TaskIsReadyForCreation", listUtils.establishNewTask.bind(this));
+    PubSub.on("TaskIsReadyForEditing", listUtils.editTask.bind(this));
+    PubSub.on("UserWantsToDeleteTask", listUtils.deleteTask.bind(this));
   }
 }
 
