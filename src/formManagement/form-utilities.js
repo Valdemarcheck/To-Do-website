@@ -9,3 +9,9 @@ export function getEntityPath(workingForm, formType) {
   const path = { listId: pathArray[0], taskId: pathArray[1] };
   return path;
 }
+
+export function setupFormInputValues(workingForm, entity) {
+  workingForm.form.querySelectorAll("input").forEach((current) => {
+    current.value = entity[current.id];
+  });
+}

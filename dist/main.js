@@ -2429,7 +2429,7 @@
         }
 
         function getFormData(formType) {
-          const workingForm = chooseWorkingForm(formType);
+          const workingForm = getWorkingForm(formType);
 
           const formInputData = {};
           Array.from(workingForm.form.elements).forEach((element) => {
@@ -2469,7 +2469,7 @@
           resetForm(formType);
         }
 
-        function chooseWorkingForm(formType) {
+        function getWorkingForm(formType) {
           switch (formType) {
             case FORM_REGISTRY.List:
               return listForm;
@@ -2479,14 +2479,14 @@
         }
 
         function resetForm(formType) {
-          const workingForm = chooseWorkingForm(formType);
+          const workingForm = getWorkingForm(formType);
           workingForm.form.reset();
           workingForm.form.removeAttribute("data-editable-list-id");
           workingForm.mode = MODES.CREATION;
         }
 
         function openForm(formType) {
-          const workingForm = chooseWorkingForm(formType);
+          const workingForm = getWorkingForm(formType);
           workingForm.background.style.display = "flex";
           if (workingForm === taskForm) {
             PubSub.emit("GetListRegistry");
@@ -2494,7 +2494,7 @@
         }
 
         function closeForm(formType) {
-          const workingForm = chooseWorkingForm(formType);
+          const workingForm = getWorkingForm(formType);
           workingForm.background.style.display = "none";
 
           if (workingForm.mode !== MODES.CREATION) {
@@ -2514,7 +2514,7 @@
           parentList.value = id;
         }
 
-        function prepareListFormForEditing(list) {
+        function prepareListFormForEditingMode(list) {
           listForm.mode = MODES.EDITING;
 
           listForm.form.querySelectorAll("input").forEach((current) => {
@@ -2523,7 +2523,7 @@
           listForm.form.dataset.editableListId = list.id;
         }
 
-        function prepareTaskFormForEditing(task) {
+        function prepareTaskFormForEditingMode(task) {
           taskForm.mode = MODES.EDITING;
 
           taskForm.form.querySelectorAll("input").forEach((current) => {
@@ -2535,12 +2535,12 @@
         PubSub.on("OpenForm", openForm);
         PubSub.on("CloseForm", closeForm);
         PubSub.on("UserFinishedUsingForm", getFormData);
-        PubSub.on("UserWantsToEditList", prepareListFormForEditing);
+        PubSub.on("UserWantsToEditList", prepareListFormForEditingMode);
 
         PubSub.on("ListRegistryGetsReturned", setupParentListSelection);
         PubSub.on("ListIdGetsReturned", setParentListSelectionToValue);
 
-        PubSub.on("UserWantsToEditTask", prepareTaskFormForEditing);
+        PubSub.on("UserWantsToEditTask", prepareTaskFormForEditingMode);
 
         /***/
       },
@@ -3279,7 +3279,7 @@
         });
 
         const finishUsingListFormButton =
-          document.getElementById("create-list-button");
+          document.getElementById("finish-list-button");
         finishUsingListFormButton.addEventListener("click", () => {
           _PubSub__WEBPACK_IMPORTED_MODULE_0__.PubSub.emit(
             "UserFinishedUsingForm",
@@ -3302,7 +3302,7 @@
         });
 
         const finishUsingTaskFormButton =
-          document.getElementById("create-task-button");
+          document.getElementById("finish-task-button");
         finishUsingTaskFormButton.addEventListener("click", () => {
           _PubSub__WEBPACK_IMPORTED_MODULE_0__.PubSub.emit(
             "UserFinishedUsingForm",

@@ -33,7 +33,7 @@ export function deleteTask(task) {
   }
 }
 
-export function addRemoveAndEditButtons(list) {
+export function addNonDefaultListButtons(list) {
   list.EditListButton = document.createElement("button");
   list.EditListButton.addEventListener("click", () => {
     PubSub.emit("UserWantsToEditList", list);
@@ -47,8 +47,20 @@ export function addRemoveAndEditButtons(list) {
   });
   list.RemoveListButton.textContent = "x";
 
-  list.buttons.RemoveListButton = list.RemoveListButton;
+  list.ShowListInformationButton = document.createElement("button");
+  list.ShowListInformationButton.classList.add("informationButton");
+  list.ShowListInformationButton.addEventListener("click", () => {
+    PubSub.emit("UserWantsToSeeEntityInformation", {
+      formType: FORM_REGISTRY.List,
+      entity: this,
+    });
+    PubSub.emit("OpenForm", FORM_REGISTRY.List);
+  });
+  list.ShowListInformationButton.textContent = "info";
+
+  list.buttons.ShowListInformationButton = list.ShowListInformationButton;
   list.buttons.EditListButton = list.EditListButton;
+  list.buttons.RemoveListButton = list.RemoveListButton;
 }
 
 function taskBelongsToThisList(listNameTaskIsLookingFor, currentListName) {

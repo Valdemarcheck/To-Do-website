@@ -16,7 +16,7 @@ listFormCloseButton.addEventListener("click", () => {
 });
 
 export const finishUsingListFormButton =
-  document.getElementById("create-list-button");
+  document.getElementById("finish-list-button");
 finishUsingListFormButton.addEventListener("click", () => {
   PubSub.emit("UserFinishedUsingForm", FORM_REGISTRY.List);
   PubSub.emit("CloseForm", FORM_REGISTRY.List);
@@ -30,7 +30,7 @@ taskFormCloseButton.addEventListener("click", () => {
 });
 
 export const finishUsingTaskFormButton =
-  document.getElementById("create-task-button");
+  document.getElementById("finish-task-button");
 finishUsingTaskFormButton.addEventListener("click", () => {
   PubSub.emit("UserFinishedUsingForm", FORM_REGISTRY.Task);
   PubSub.emit("CloseForm", FORM_REGISTRY.Task);
