@@ -19,7 +19,8 @@ export default (() => {
   }
 
   function editTask(taskData) {
-    if (taskBelongsToThisList(taskData.path.thisId, this.id)) {
+    console.log(taskData);
+    if (taskBelongsToThisList(taskData.path.listId, this.id)) {
       const editedTask = this.taskRegistrar.editTask(taskData);
       this.taskRenderer.rerenderTask(this.div, editedTask);
     }
