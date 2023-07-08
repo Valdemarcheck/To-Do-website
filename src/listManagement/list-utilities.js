@@ -1,5 +1,3 @@
-import { PubSub } from "../PubSub";
-import { FORM_REGISTRY } from "../formManagement/form-manager";
 import { TaskCreator } from "../taskManagement/task-creator";
 import { TaskRegistrar } from "../taskManagement/task-registrar";
 import { TaskRenderer } from "../taskManagement/task-renderer";
@@ -31,36 +29,6 @@ export function deleteTask(task) {
     this.taskRegistrar.deleteTask(task);
     this.taskRenderer.stopRenderingTask(task);
   }
-}
-
-export function addNonDefaultListButtons(list) {
-  list.EditListButton = document.createElement("button");
-  list.EditListButton.addEventListener("click", () => {
-    PubSub.emit("UserWantsToEditList", list);
-    PubSub.emit("OpenForm", FORM_REGISTRY.List);
-  });
-  list.EditListButton.textContent = "edit";
-
-  list.RemoveListButton = document.createElement("button");
-  list.RemoveListButton.addEventListener("click", () => {
-    PubSub.emit("ListShouldBeRemoved", list);
-  });
-  list.RemoveListButton.textContent = "x";
-
-  list.ShowListInformationButton = document.createElement("button");
-  list.ShowListInformationButton.classList.add("informationButton");
-  list.ShowListInformationButton.addEventListener("click", () => {
-    PubSub.emit("UserWantsToSeeEntityInformation", {
-      formType: FORM_REGISTRY.List,
-      entity: list,
-    });
-    PubSub.emit("OpenForm", FORM_REGISTRY.List);
-  });
-  list.ShowListInformationButton.textContent = "info";
-
-  list.buttons.ShowListInformationButton = list.ShowListInformationButton;
-  list.buttons.EditListButton = list.EditListButton;
-  list.buttons.RemoveListButton = list.RemoveListButton;
 }
 
 function taskBelongsToThisList(listNameTaskIsLookingFor, currentListName) {
