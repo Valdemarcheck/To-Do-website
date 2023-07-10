@@ -46,7 +46,10 @@ export class Task {
       "EditTaskButton"
     );
     this.EditTaskButton.addEventListener("click", () => {
-      PubSub.emit("UserWantsToEditTask", this);
+      PubSub.emit("UserWantsToEditTask", {
+        formType: FORM_REGISTRY.Task,
+        entity: this,
+      });
       PubSub.emit("OpenForm", FORM_REGISTRY.Task);
     });
 

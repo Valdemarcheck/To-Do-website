@@ -1,4 +1,5 @@
 import { PubSub } from "../PubSub";
+import { FORM_REGISTRY } from "../formManagement/form-manager";
 import { setupButton } from "../utilities";
 import { List } from "./list";
 
@@ -26,7 +27,10 @@ function addNonDefaultListButtons(list) {
     "EditListButton"
   );
   list.EditListButton.addEventListener("click", () => {
-    PubSub.emit("UserWantsToEditList", list);
+    PubSub.emit("UserWantsToEditList", {
+      entity: list,
+      formType: FORM_REGISTRY.List,
+    });
     PubSub.emit("OpenForm", FORM_REGISTRY.List);
   });
 

@@ -33,13 +33,6 @@ function getFormData(formType) {
     path = formUtils.getEntityPath(workingForm, formType);
   }
 
-  // if (formType === FORM_REGISTRY.Task) {
-  //   formInputData.dueDate =
-  //     formInputData.dueDate === ""
-  //       ? new Date()
-  //       : new Date(formInputData.dueDate);
-  // }
-
   if (workingForm.mode === MODES.CREATION) {
     PubSub.emit(formType + "IsReadyForCreation", formInputData);
   } else if (workingForm.mode === MODES.EDITING) {
@@ -63,7 +56,7 @@ function getWorkingForm(formType) {
 function resetForm(formType) {
   const workingForm = getWorkingForm(formType);
   workingForm.form.reset();
-  workingForm.form.removeAttribute("data-editable-list-id");
+  workingForm.form.removeAttribute("data-${formType}-list-id");
   workingForm.mode = MODES.CREATION;
   const finishUsingFormButton =
     workingForm.form.querySelector(".finish-button");
@@ -100,18 +93,19 @@ function setParentListSelectionToValue(id) {
   parentList.value = id;
 }
 
-function prepareListFormForEditingMode(list) {
-  listForm.mode = MODES.EDITING;
+function prepareFormForEditingMode(data) {
+  const formType = data.formType;
+  const workingForm = getWorkingForm(formType);
+  workingForm.mode = MODES.EDITING;
 
-  formUtils.setupFormInputValues(listForm, list);
-  listForm.form.dataset.editableListId = list.id;
-}
-
-function prepareTaskFormForEditingMode(task) {
-  taskForm.mode = MODES.EDITING;
-
-  formUtils.setupFormInputValues(taskForm, task);
-  taskForm.form.dataset.editableTaskId = `${task.parentList}:${task.id}`;
+  formUtils.setupFormInputValues(workingForm, data.entity);
+  if (formType === FORM_REGISTRY.List) {
+    const list = data.entity;
+    workingForm.form.dataset.editableListId = list.id;
+  } else if (formType === FORM_REGISTRY.Task) {
+    const task = data.entity;
+    workingForm.form.dataset.editableTaskId = `${task.parentList}:${task.id}`;
+  }
 }
 
 function prepareFormForInformationMode(data) {
@@ -133,11 +127,7 @@ function setupEditThisFormButton(workingForm, data) {
   editThisFormButton.textContent = "Edit this " + data.formType.toLowerCase();
   editThisFormButton.addEventListener("click", () => {
     resetForm(data.formType);
-    if (data.formType === FORM_REGISTRY.Task) {
-      prepareTaskFormForEditingMode(data.entity);
-    } else if (data.formType === FORM_REGISTRY.List) {
-      prepareListFormForEditingMode(data.entity);
-    }
+    prepareFormForEditingMode(data);
     editThisFormButton.remove();
   });
   workingForm.form.prepend(editThisFormButton);
@@ -147,10 +137,10 @@ PubSub.on("OpenForm", openForm);
 PubSub.on("CloseForm", closeForm);
 
 PubSub.on("UserFinishedUsingForm", getFormData);
-PubSub.on("UserWantsToEditList", prepareListFormForEditingMode);
 PubSub.on("ListRegistryGetsReturned", setupParentListSelection);
 PubSub.on("ListIdGetsReturned", setParentListSelectionToValue);
 
-PubSub.on("UserWantsToEditTask", prepareTaskFormForEditingMode);
+PubSub.on("UserWantsToEditList", prepareFormForEditingMode);
+PubSub.on("UserWantsToEditTask", prepareFormForEditingMode);
 
 PubSub.on("UserWantsToSeeEntityInformation", prepareFormForInformationMode);
