@@ -95,16 +95,19 @@ function setParentListSelectionToValue(id) {
 
 function prepareFormForEditingMode(data) {
   const formType = data.formType;
+  const entity = data.entity;
   const workingForm = getWorkingForm(formType);
-  workingForm.mode = MODES.EDITING;
+  const datasetPropertyName = `editable${formType}Id`;
 
+  workingForm.mode = MODES.EDITING;
   formUtils.setupFormInputValues(workingForm, data.entity);
+
   if (formType === FORM_REGISTRY.List) {
-    const list = data.entity;
-    workingForm.form.dataset.editableListId = list.id;
+    workingForm.form.dataset[datasetPropertyName] = entity.id;
   } else if (formType === FORM_REGISTRY.Task) {
-    const task = data.entity;
-    workingForm.form.dataset.editableTaskId = `${task.parentList}:${task.id}`;
+    workingForm.form.dataset[
+      datasetPropertyName
+    ] = `${entity.parentList}:${entity.id}`;
   }
 }
 

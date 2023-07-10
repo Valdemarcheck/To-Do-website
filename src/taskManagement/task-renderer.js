@@ -1,5 +1,3 @@
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import isFuture from "date-fns/isFuture";
 export class TaskRenderer {
   construct() {}
 
@@ -21,11 +19,6 @@ export class TaskRenderer {
     const taskDueDate = document.createElement("p");
     taskDueDate.textContent = task.dueDate;
     taskDueDate.classList.add("due-date");
-    // if (isFuture(task.dueDate)) {
-    //   taskDueDate.classList.add("not-postponed");
-    // } else {
-    //   taskDueDate.classList.add("postponed");
-    // }
     taskDiv.append(taskDueDate);
 
     const buttonsDiv = document.createElement("div");
