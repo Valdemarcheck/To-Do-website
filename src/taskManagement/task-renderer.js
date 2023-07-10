@@ -4,10 +4,9 @@ export class TaskRenderer {
   renderTask(parentListDiv, task) {
     const parentListTaskSection = parentListDiv.querySelector(".task-section");
 
-    const taskDiv = document.createElement("div");
+    const taskDiv = task.div;
     taskDiv.classList.add("task-background");
     parentListTaskSection.append(taskDiv);
-    task.div = taskDiv;
 
     taskDiv.append(task.finishTaskCheckbox);
 

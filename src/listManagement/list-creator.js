@@ -43,20 +43,6 @@ function addNonDefaultListButtons(list) {
   list.RemoveListButton.addEventListener("click", () => {
     PubSub.emit("ListShouldBeRemoved", list);
   });
-
-  list.ShowListInformationButton = setupButton(
-    "info",
-    "information-button",
-    list,
-    "ShowListInformationButton"
-  );
-  list.ShowListInformationButton.addEventListener("click", () => {
-    PubSub.emit("UserWantsToSeeEntityInformation", {
-      formType: FORM_REGISTRY.List,
-      entity: list,
-    });
-    PubSub.emit("OpenForm", FORM_REGISTRY.List);
-  });
 }
 
 PubSub.on("ListIsReadyForCreation", createNewList);

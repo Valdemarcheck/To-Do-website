@@ -6,9 +6,8 @@ const listDisplay = document.getElementById("lists");
 function renderListUponCreation(listData) {
   const list = listData.list;
 
-  const listDiv = document.createElement("div");
+  const listDiv = list.div;
   listDiv.dataset.listId = listData.listId;
-  list.div = listDiv;
   listDiv.classList.add("list");
   listDiv.style.borderColor = list.color;
 

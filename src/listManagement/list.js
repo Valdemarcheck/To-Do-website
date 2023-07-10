@@ -5,7 +5,7 @@ import * as listUtils from "./list-utilities";
 
 export class List {
   id = null;
-  div = null;
+  div = document.createElement("div");
   buttons = {};
 
   constructor(data) {

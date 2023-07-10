@@ -155,6 +155,11 @@ form {
   gap: 10px;
 }
 
+.task-background:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+}
+
 .task-name {
   max-width: 30ch;
   max-height: 3lh;

@@ -5,7 +5,7 @@ import { setupButton } from "../utilities";
 export class Task {
   SUBTASKS = [];
   id = null;
-  div = null;
+  div = document.createElement("div");
   buttons = {};
 
   constructor(taskData) {
@@ -15,6 +15,14 @@ export class Task {
     this.priority = taskData.priority;
     this.parentList = taskData.parentList;
 
+    this.div.addEventListener("click", () => {
+      PubSub.emit("UserWantsToEditTask", {
+        formType: FORM_REGISTRY.Task,
+        entity: this,
+      });
+      PubSub.emit("OpenForm", FORM_REGISTRY.Task);
+    });
+
     this.finishTaskCheckbox = document.createElement("input");
     this.finishTaskCheckbox.setAttribute("type", "checkbox");
     this.finishTaskCheckbox.addEventListener("change", (e) => {
@@ -23,20 +31,6 @@ export class Task {
       } else {
         PubSub.emit("TaskUnchecked", this);
       }
-    });
-
-    this.ShowTaskInformationButton = setupButton(
-      "info",
-      "information-button",
-      this,
-      "ShowTaskInformationButton"
-    );
-    this.ShowTaskInformationButton.addEventListener("click", () => {
-      PubSub.emit("UserWantsToSeeEntityInformation", {
-        formType: FORM_REGISTRY.Task,
-        entity: this,
-      });
-      PubSub.emit("OpenForm", FORM_REGISTRY.Task);
     });
 
     this.EditTaskButton = setupButton(

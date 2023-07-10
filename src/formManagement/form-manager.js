@@ -111,31 +111,6 @@ function prepareFormForEditingMode(data) {
   }
 }
 
-function prepareFormForInformationMode(data) {
-  const workingForm = getWorkingForm(data.formType);
-  workingForm.mode = MODES.INFORMATION;
-  formUtils.setupFormInputValues(workingForm, data.entity);
-
-  const finishUsingFormButton =
-    workingForm.form.querySelector(".finish-button");
-  finishUsingFormButton.style.display = "none";
-
-  setupEditThisFormButton(workingForm, data);
-}
-
-function setupEditThisFormButton(workingForm, data) {
-  const editThisFormButton = document.createElement("button");
-  editThisFormButton.setAttribute("type", "button");
-  editThisFormButton.classList.add("edit-this-form-button");
-  editThisFormButton.textContent = "Edit this " + data.formType.toLowerCase();
-  editThisFormButton.addEventListener("click", () => {
-    resetForm(data.formType);
-    prepareFormForEditingMode(data);
-    editThisFormButton.remove();
-  });
-  workingForm.form.prepend(editThisFormButton);
-}
-
 PubSub.on("OpenForm", openForm);
 PubSub.on("CloseForm", closeForm);
 
@@ -145,5 +120,3 @@ PubSub.on("ListIdGetsReturned", setParentListSelectionToValue);
 
 PubSub.on("UserWantsToEditList", prepareFormForEditingMode);
 PubSub.on("UserWantsToEditTask", prepareFormForEditingMode);
-
-PubSub.on("UserWantsToSeeEntityInformation", prepareFormForInformationMode);
