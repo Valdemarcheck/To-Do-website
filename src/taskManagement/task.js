@@ -1,6 +1,7 @@
 import { PubSub } from "../PubSub";
 import { FORM_REGISTRY } from "../formManagement/form-manager";
 import { setupButton } from "../utilities";
+import { setupDueDate } from "./task-utilities";
 
 export class Task {
   SUBTASKS = [];
@@ -11,7 +12,7 @@ export class Task {
   constructor(taskData) {
     this.name = taskData.name || "Unnamed";
     this.description = taskData.description;
-    this.dueDate = taskData.dueDate;
+    this._dueDate = setupDueDate(taskData.dueDate);
     this.priority = taskData.priority;
     this.parentList = taskData.parentList;
 
@@ -56,5 +57,13 @@ export class Task {
     this.DeleteTaskButton.addEventListener("click", () => {
       PubSub.emit("UserWantsToDeleteTask", this);
     });
+  }
+
+  get dueDate() {
+    return this._dueDate;
+  }
+
+  set dueDate(value) {
+    this._dueDate = setupDueDate(value);
   }
 }

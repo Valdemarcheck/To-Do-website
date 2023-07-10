@@ -169,14 +169,11 @@ form {
 
 .due-date {
   font-size: 0.8em;
+  color: rgb(55, 132, 158);
   background-color: rgb(148, 148, 148);
   padding: 5px;
   border-radius: 5px;
   font-weight: bold;
-}
-
-.not-postponed {
-  color: rgb(55, 132, 158);
 }
 
 .postponed {

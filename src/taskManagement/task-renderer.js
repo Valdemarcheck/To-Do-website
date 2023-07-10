@@ -1,3 +1,6 @@
+import isPast from "date-fns/isPast";
+import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
+
 export class TaskRenderer {
   construct() {}
 
@@ -16,8 +19,10 @@ export class TaskRenderer {
     taskDiv.append(taskNameText);
 
     const taskDueDate = document.createElement("p");
-    taskDueDate.textContent = task.dueDate;
     taskDueDate.classList.add("due-date");
+    console.log(task.dueDate);
+    taskDueDate.textContent = formatDistanceToNowStrict(task.dueDate);
+    setupPostponedClass(task.dueDate, taskDueDate);
     taskDiv.append(taskDueDate);
 
     const buttonsDiv = document.createElement("div");
@@ -44,13 +49,20 @@ export class TaskRenderer {
     taskNameText.textContent = task.name;
 
     const taskDueDate = taskDiv.querySelector(".due-date");
-    taskDueDate.textContent = task.dueDate;
-    // if (isFuture(task.dueDate)) {
-    //   taskDueDate.classList.add("not-postponed");
-    //   taskDueDate.classList.remove("postponed");
-    // } else {
-    //   taskDueDate.classList.add("postponed");
-    //   taskDueDate.classList.remove("not-postponed");
-    // }
+    console.log(task.dueDate);
+    taskDueDate.textContent = formatDistanceToNowStrict(task.dueDate);
+    setupPostponedClass(task.dueDate, taskDueDate);
   }
+}
+
+function setupPostponedClass(dueDateValue, taskDueDateElement) {
+  if (isPostponed(dueDateValue)) {
+    taskDueDateElement.classList.add("postponed");
+  } else {
+    taskDueDateElement.classList.remove("postponed");
+  }
+}
+
+function isPostponed(dueDateValue) {
+  return isPast(dueDateValue);
 }
