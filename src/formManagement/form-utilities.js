@@ -11,7 +11,13 @@ export function getEntityPath(workingForm, formType) {
 }
 
 export function setupFormInputValues(workingForm, entity) {
-  workingForm.form.querySelectorAll("input").forEach((current) => {
-    current.value = entity[current.id];
+  Array.from(workingForm.form.elements).forEach((current) => {
+    if (current.nodeName === "INPUT" || current.nodeName === "SELECT") {
+      current.value = entity[current.id];
+
+      if (current.nodeName === "SELECT") {
+        console.log(current.selectedOptions[0]);
+      }
+    }
   });
 }

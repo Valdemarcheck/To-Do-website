@@ -23,10 +23,10 @@ function getFormData(formType) {
   const workingForm = getWorkingForm(formType);
 
   const formInputData = {};
-  Array.from(workingForm.form.elements).forEach((element) => {
-    if (element.nodeName !== "BUTTON") {
-      const inputContentType = element.id;
-      formInputData[inputContentType] = formUtils.trimInput(element.value);
+  Array.from(workingForm.form.elements).forEach((current) => {
+    if (current.nodeName === "INPUT" || current.nodeName === "SELECT") {
+      const inputContentType = current.id;
+      formInputData[inputContentType] = formUtils.trimInput(current.value);
     }
   });
 
