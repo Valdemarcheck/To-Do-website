@@ -29,9 +29,4 @@ export class List {
     PubSub.on("TaskIsReadyForEditing", listUtils.editTask.bind(this));
     PubSub.on("UserWantsToDeleteTask", listUtils.deleteTask.bind(this));
   }
-
-  removeDiv() {
-    this.div.remove();
-    this.div = document.createElement("div");
-  }
 }

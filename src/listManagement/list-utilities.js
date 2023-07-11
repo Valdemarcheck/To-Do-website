@@ -19,7 +19,7 @@ export function establishNewTask(taskData) {
 export function editTask(taskData) {
   if (taskBelongsToThisList(taskData.path.listId, this.id)) {
     const editedTask = this.taskRegistrar.editTask(taskData);
-    this.taskRenderer.rerenderTask(editedTask);
+    this.taskRenderer.rerenderTask(this.div, editedTask);
   }
 }
 

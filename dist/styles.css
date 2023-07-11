@@ -136,7 +136,7 @@ form {
   gap: 5px;
 }
 
-.task-background {
+.task {
   background-color: rgb(196, 196, 196);
   border-radius: 4px;
   min-height: 40px;
@@ -148,7 +148,7 @@ form {
   gap: 10px;
 }
 
-.task-background:hover {
+.task:hover {
   cursor: pointer;
   filter: brightness(1.1);
 }

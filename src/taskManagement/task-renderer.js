@@ -1,5 +1,6 @@
 import isPast from "date-fns/isPast";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
+import { insertAfter, removeEntityDiv } from "../utilities";
 
 export class TaskRenderer {
   construct() {}
@@ -8,8 +9,8 @@ export class TaskRenderer {
     const parentListTaskSection = parentListDiv.querySelector(".task-section");
 
     const taskDiv = task.div;
-    taskDiv.classList.add("task-background");
-    parentListTaskSection.append(taskDiv);
+    taskDiv.classList.add("task");
+    appendTask(parentListTaskSection, task, taskDiv);
 
     taskDiv.append(task.finishTaskCheckbox);
 
@@ -39,19 +40,23 @@ export class TaskRenderer {
   }
 
   stopRenderingTask(task) {
-    task.div.remove();
+    removeEntityDiv(task);
   }
 
-  rerenderTask(task) {
-    const taskDiv = task.div;
+  rerenderTask(parentListDiv, task) {
+    this.stopRenderingTask(task);
+    this.renderTask(parentListDiv, task);
+  }
+}
 
-    const taskNameText = taskDiv.querySelector(".task-name");
-    taskNameText.textContent = task.name;
-
-    const taskDueDate = taskDiv.querySelector(".due-date");
-    console.log(task.dueDate);
-    taskDueDate.textContent = formatDistanceToNowStrict(task.dueDate);
-    setupPostponedClass(task.dueDate, taskDueDate);
+function appendTask(parentListTaskSection, task, taskDiv) {
+  const siblingTaskToPutAfter =
+    parentListTaskSection.getElementsByClassName("task")[task.id - 1];
+  console.log(siblingTaskToPutAfter, task.id);
+  if (siblingTaskToPutAfter) {
+    insertAfter(siblingTaskToPutAfter, taskDiv);
+  } else {
+    parentListTaskSection.prepend(taskDiv);
   }
 }
 

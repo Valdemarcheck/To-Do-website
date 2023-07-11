@@ -59,6 +59,11 @@ export class Task {
     });
   }
 
+  removeDiv() {
+    this.div.remove();
+    this.div = document.createElement("div");
+  }
+
   get dueDate() {
     return this._dueDate;
   }

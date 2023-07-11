@@ -2531,7 +2531,7 @@
               parentListDiv.querySelector(".task-section");
 
             const taskDiv = task.div;
-            taskDiv.classList.add("task-background");
+            taskDiv.classList.add("task");
             parentListTaskSection.append(taskDiv);
 
             taskDiv.append(task.finishTaskCheckbox);

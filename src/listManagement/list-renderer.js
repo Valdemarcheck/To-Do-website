@@ -1,4 +1,5 @@
 import { PubSub } from "../PubSub";
+import { insertAfter, removeEntityDiv } from "../utilities";
 import { DEFAULT_LIST_ID } from "./list-creator";
 
 const listDisplay = document.getElementById("lists");
@@ -50,16 +51,12 @@ function renderAllListButtons(list, buttonsDiv) {
 }
 
 function stopRenderingList(list) {
-  list.removeDiv();
+  removeEntityDiv(list);
 }
 
 function rerenderList(listData) {
   stopRenderingList(listData.list);
   renderList(listData);
-}
-
-function insertAfter(nodeToPutAfter, newNode) {
-  nodeToPutAfter.parentNode.insertBefore(newNode, nodeToPutAfter.nextSibling);
 }
 
 PubSub.on("DefaultListPending", renderList);
