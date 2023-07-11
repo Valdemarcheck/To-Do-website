@@ -3,7 +3,8 @@ import { DEFAULT_LIST_ID } from "./list-creator";
 
 const listDisplay = document.getElementById("lists");
 
-function renderListUponCreation(listData) {
+function renderList(listData) {
+  console.log(listData);
   const list = listData.list;
 
   const listDiv = list.div;
@@ -14,7 +15,9 @@ function renderListUponCreation(listData) {
   if (listData.listId === DEFAULT_LIST_ID) {
     listDisplay.prepend(listDiv);
   } else {
-    listDisplay.append(listDiv);
+    const siblingListToPutAfter =
+      listDisplay.getElementsByClassName("list")[listData.listId];
+    insertAfter(siblingListToPutAfter, listDiv);
   }
 
   const listRow = document.createElement("div");
@@ -47,20 +50,19 @@ function renderAllListButtons(list, buttonsDiv) {
 }
 
 function stopRenderingList(list) {
-  list.div.remove();
+  list.removeDiv();
 }
 
 function rerenderList(listData) {
-  const query = `[data-list-id="${listData.path.listId}"]`;
-
-  const listDiv = document.querySelector(query);
-  listDiv.style.borderColor = listData.data.color;
-
-  const listNameText = listDiv.querySelector(".list-name");
-  listNameText.textContent = listData.data.name;
+  stopRenderingList(listData.list);
+  renderList(listData);
 }
 
-PubSub.on("DefaultListPending", renderListUponCreation);
-PubSub.on("ListRegistered", renderListUponCreation);
+function insertAfter(nodeToPutAfter, newNode) {
+  nodeToPutAfter.parentNode.insertBefore(newNode, nodeToPutAfter.nextSibling);
+}
+
+PubSub.on("DefaultListPending", renderList);
+PubSub.on("ListRegistered", renderList);
 PubSub.on("ListShouldBeRemoved", stopRenderingList);
 PubSub.on("listShouldBeRerendered", rerenderList);

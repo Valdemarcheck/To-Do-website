@@ -28,7 +28,10 @@ function editList(listData) {
   for (const [key, value] of Object.entries(listData.data)) {
     editableList[key] = value;
   }
-  PubSub.emit("listShouldBeRerendered", listData);
+  PubSub.emit("listShouldBeRerendered", {
+    list: editableList,
+    listId: editableList.id,
+  });
 }
 
 function getListRegistry() {
