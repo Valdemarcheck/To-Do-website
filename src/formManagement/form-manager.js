@@ -10,9 +10,11 @@ const parentList = document.getElementById("parentList");
 
 function registerForm(backgroundId, codename) {
   FORM_REGISTRY[codename] = codename;
+  const formBackground = document.getElementById(backgroundId);
   return {
-    background: document.getElementById(backgroundId),
-    form: document.getElementById(backgroundId).querySelector("form"),
+    background: formBackground,
+    form: formBackground.querySelector("form"),
+    title: formBackground.getElementsByClassName("form-title")[0],
     mode: MODES.CREATION,
   };
 }
@@ -57,7 +59,10 @@ function resetForm(formType) {
   const workingForm = getWorkingForm(formType);
   workingForm.form.reset();
   workingForm.form.removeAttribute("data-${formType}-list-id");
+
+  workingForm.title.textContent = `Create a new ${formType}`;
   workingForm.mode = MODES.CREATION;
+
   const finishUsingFormButton =
     workingForm.form.querySelector(".finish-button");
   finishUsingFormButton.style.display = "inline";
@@ -99,6 +104,7 @@ function prepareFormForEditingMode(data) {
   const workingForm = getWorkingForm(formType);
   const datasetPropertyName = `editable${formType}Id`;
 
+  workingForm.title.textContent = `Edit a ${data.formType}`;
   workingForm.mode = MODES.EDITING;
   formUtils.setupFormInputValues(workingForm, data.entity);
 
