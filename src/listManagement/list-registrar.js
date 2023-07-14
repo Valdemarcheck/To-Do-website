@@ -1,7 +1,6 @@
 const { PubSub } = require("../PubSub");
 
 const LIST_REGISTRY = [];
-let defaultListReference = null;
 
 function addListToRegistry(list) {
   LIST_REGISTRY.push(list);
@@ -35,13 +34,9 @@ function editList(listData) {
 }
 
 function getListRegistry() {
-  const fullListRegistry = [defaultListReference, ...LIST_REGISTRY];
-  PubSub.emit("ListRegistryGetsReturned", fullListRegistry);
+  PubSub.emit("ListRegistryGetsReturned", LIST_REGISTRY);
 }
 
-PubSub.on("DefaultListPending", (listData) => {
-  defaultListReference = listData.list;
-});
 PubSub.on("ListPending", addListToRegistry);
 PubSub.on("ListShouldBeRemoved", removeListFromRegistry);
 PubSub.on("ListIsReadyForEditing", editList);

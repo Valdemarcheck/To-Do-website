@@ -3,14 +3,10 @@ import { FORM_REGISTRY } from "../formManagement/form-manager";
 import { setupButton } from "../utilities";
 import { List } from "./list";
 
-export const DEFAULT_LIST_ID = "DEFAULT";
-
 function createDefaultList() {
   const creationData = { name: "Default", color: "#ccc" };
   const defaultList = new List(creationData);
-  defaultList.id = DEFAULT_LIST_ID;
-  const listData = { list: defaultList, listId: defaultList.id };
-  PubSub.emit("DefaultListPending", listData);
+  PubSub.emit("ListPending", defaultList);
 }
 
 function createNewList(newData) {

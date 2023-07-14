@@ -6,11 +6,21 @@ export function setupButton(name, className, parent, buttonArrayName) {
   return button;
 }
 
-export function insertAfter(nodeToPutAfter, newNode) {
-  nodeToPutAfter.parentNode.insertBefore(newNode, nodeToPutAfter.nextSibling);
-}
-
 export function removeEntityDiv(entity) {
   entity.div.remove();
   entity.div = document.createElement("div");
+}
+
+export function appendEntity(parent, className, entity, entityDiv) {
+  const siblingEntityToPutAfter =
+    parent.getElementsByClassName(className)[entity.id - 1];
+  if (siblingEntityToPutAfter) {
+    insertAfter(siblingEntityToPutAfter, entityDiv);
+  } else {
+    parent.prepend(entityDiv);
+  }
+}
+
+function insertAfter(nodeToPutAfter, newNode) {
+  nodeToPutAfter.parentNode.insertBefore(newNode, nodeToPutAfter.nextSibling);
 }

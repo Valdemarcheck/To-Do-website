@@ -1,11 +1,9 @@
 import { PubSub } from "../PubSub";
-import { insertAfter, removeEntityDiv } from "../utilities";
-import { DEFAULT_LIST_ID } from "./list-creator";
+import { appendEntity, removeEntityDiv } from "../utilities";
 
 const listDisplay = document.getElementById("lists");
 
 function renderList(listData) {
-  console.log(listData);
   const list = listData.list;
 
   const listDiv = list.div;
@@ -13,13 +11,7 @@ function renderList(listData) {
   listDiv.classList.add("list");
   listDiv.style.borderColor = list.color;
 
-  if (listData.listId === DEFAULT_LIST_ID) {
-    listDisplay.prepend(listDiv);
-  } else {
-    const siblingListToPutAfter =
-      listDisplay.getElementsByClassName("list")[listData.listId];
-    insertAfter(siblingListToPutAfter, listDiv);
-  }
+  appendEntity(listDisplay, "list", list, listDiv);
 
   const listRow = document.createElement("div");
   listRow.classList.add("list-row");
