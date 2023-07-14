@@ -24,10 +24,23 @@ export function editTask(taskData) {
 }
 
 export function deleteTask(task) {
-  console.log(task.parentList, this.id);
   if (taskBelongsToThisList(task.parentList, this.id)) {
     this.taskRegistrar.deleteTask(task);
     this.taskRenderer.stopRenderingTask(task);
+  }
+}
+
+export function checkTask(task) {
+  if (taskBelongsToThisList(task.parentList, this.id)) {
+    this.taskRegistrar.setTaskFinished({ task, finished: true });
+    this.taskRenderer.renderTaskAsChecked(task.div);
+  }
+}
+
+export function uncheckTask(task) {
+  if (taskBelongsToThisList(task.parentList, this.id)) {
+    this.taskRegistrar.setTaskFinished({ task, finished: false });
+    this.taskRenderer.renderTaskAsUnchecked(task.div);
   }
 }
 

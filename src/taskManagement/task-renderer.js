@@ -30,6 +30,7 @@ export class TaskRenderer {
     taskDiv.append(buttonsDiv);
 
     this.renderTaskButtons(buttonsDiv, task);
+    this.renderTaskAsUnchecked(taskDiv);
   }
 
   renderTaskButtons(buttonsDiv, task) {
@@ -38,13 +39,23 @@ export class TaskRenderer {
     });
   }
 
-  stopRenderingTask(task) {
-    removeEntityDiv(task);
-  }
-
   rerenderTask(parentListDiv, task) {
     this.stopRenderingTask(task);
     this.renderTask(parentListDiv, task);
+  }
+
+  renderTaskAsChecked(taskDiv) {
+    taskDiv.classList.remove("unchecked-task");
+    taskDiv.classList.add("checked-task");
+  }
+
+  renderTaskAsUnchecked(taskDiv) {
+    taskDiv.classList.remove("checked-task");
+    taskDiv.classList.add("unchecked-task");
+  }
+
+  stopRenderingTask(task) {
+    removeEntityDiv(task);
   }
 }
 

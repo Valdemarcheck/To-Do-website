@@ -14,10 +14,6 @@ export function setupFormInputValues(workingForm, entity) {
   Array.from(workingForm.form.elements).forEach((current) => {
     if (current.nodeName === "INPUT" || current.nodeName === "SELECT") {
       current.value = entity[current.id];
-
-      if (current.nodeName === "SELECT") {
-        console.log(current.selectedOptions[0]);
-      }
     }
   });
 }

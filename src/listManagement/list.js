@@ -28,5 +28,7 @@ export class List {
     PubSub.on("TaskIsReadyForCreation", listUtils.establishNewTask.bind(this));
     PubSub.on("TaskIsReadyForEditing", listUtils.editTask.bind(this));
     PubSub.on("UserWantsToDeleteTask", listUtils.deleteTask.bind(this));
+    PubSub.on("TaskChecked", listUtils.checkTask.bind(this));
+    PubSub.on("TaskUnchecked", listUtils.uncheckTask.bind(this));
   }
 }

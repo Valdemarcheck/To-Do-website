@@ -137,7 +137,6 @@ form {
 }
 
 .task {
-  background-color: rgb(196, 196, 196);
   border-radius: 4px;
   min-height: 40px;
 
@@ -171,4 +170,12 @@ form {
 
 .postponed {
   color: rgb(165, 44, 44);
+}
+
+.checked-task {
+  background-color: rgb(122, 122, 122);
+}
+
+.unchecked-task {
+  background-color: rgb(196, 196, 196);
 }

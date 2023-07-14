@@ -6,6 +6,7 @@ import { setupDueDate } from "./task-utilities";
 export class Task {
   SUBTASKS = [];
   id = null;
+  finished = false;
   div = document.createElement("div");
   buttons = {};
 
