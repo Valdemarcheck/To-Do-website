@@ -96,6 +96,7 @@ form {
   padding: 10px;
   border: 3px solid black;
   border-radius: 5px;
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;

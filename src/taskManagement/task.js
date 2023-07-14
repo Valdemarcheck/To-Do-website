@@ -17,12 +17,14 @@ export class Task {
     this.priority = taskData.priority;
     this.parentList = taskData.parentList;
 
-    this.div.addEventListener("click", () => {
-      PubSub.emit("UserWantsToEditTask", {
-        formType: FORM_REGISTRY.Task,
-        entity: this,
-      });
-      PubSub.emit("OpenForm", FORM_REGISTRY.Task);
+    this.div.addEventListener("click", (e) => {
+      if (e.target.classList.contains("task") || e.target.nodeName === "P") {
+        PubSub.emit("UserWantsToEditTask", {
+          formType: FORM_REGISTRY.Task,
+          entity: this,
+        });
+        PubSub.emit("OpenForm", FORM_REGISTRY.Task);
+      }
     });
 
     this.finishTaskCheckbox = document.createElement("input");
