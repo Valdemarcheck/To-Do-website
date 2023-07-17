@@ -4,7 +4,6 @@ import { setupButton } from "../utilities";
 import { setupDueDate } from "./task-utilities";
 
 export class Task {
-  SUBTASKS = [];
   id = null;
   finished = false;
   div = document.createElement("div");
@@ -14,6 +13,7 @@ export class Task {
     this.name = taskData.name || "Unnamed";
     this.description = taskData.description;
     this._dueDate = setupDueDate(taskData.dueDate);
+    this.subtasks = taskData.subtasks;
     this.priority = taskData.priority;
     this.parentList = taskData.parentList;
 

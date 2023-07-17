@@ -12,22 +12,22 @@ export class TaskRenderer {
     taskDiv.classList.add("task");
     appendEntity(parentListTaskSection, "task", task, taskDiv);
 
-    taskDiv.append(task.finishTaskCheckbox);
+    taskDiv.appendChild(task.finishTaskCheckbox);
 
     const taskNameText = document.createElement("p");
     taskNameText.classList.add("task-name");
     taskNameText.textContent = task.name;
-    taskDiv.append(taskNameText);
+    taskDiv.appendChild(taskNameText);
 
     const taskDueDate = document.createElement("p");
     taskDueDate.classList.add("due-date");
     taskDueDate.textContent = formatDistanceToNowStrict(task.dueDate);
     setupPostponedClass(task.dueDate, taskDueDate);
-    taskDiv.append(taskDueDate);
+    taskDiv.appendChild(taskDueDate);
 
     const buttonsDiv = document.createElement("div");
     buttonsDiv.classList.add("buttons-row");
-    taskDiv.append(buttonsDiv);
+    taskDiv.appendChild(buttonsDiv);
 
     this.renderTaskButtons(buttonsDiv, task);
     this.renderTaskAsUnchecked(taskDiv);
@@ -35,7 +35,7 @@ export class TaskRenderer {
 
   renderTaskButtons(buttonsDiv, task) {
     Object.values(task.buttons).forEach((button) => {
-      buttonsDiv.append(button);
+      buttonsDiv.appendChild(button);
     });
   }
 

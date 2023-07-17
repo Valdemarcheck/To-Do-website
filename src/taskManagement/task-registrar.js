@@ -24,12 +24,10 @@ export class TaskRegistrar {
 
   setTaskFinished(data) {
     data.task.finished = data.finished;
-    console.log(data.task);
   }
 
   deleteTask(task) {
     this.TASK_REGISTRY.splice(task.id, 1);
     this.updateIds();
-    console.log(this.TASK_REGISTRY);
   }
 }

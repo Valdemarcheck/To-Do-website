@@ -1,12 +1,51 @@
 const { PubSub } = require("../PubSub");
 import * as formUtils from "./form-utilities";
+import { SubtaskManager } from "./managers/subtask-manager";
 
-const MODES = { CREATION: 0, EDITING: 1, INFORMATION: 2 };
 export const FORM_REGISTRY = {};
+const MODES = { CREATION: 0, EDITING: 1, INFORMATION: 2 };
+
+const createSubtaskButton = document.getElementById("create-subtask-button");
+createSubtaskButton.addEventListener("click", createSubtask);
 
 const listForm = registerForm("list-form-background", "List");
 const taskForm = registerForm("task-form-background", "Task");
 const parentList = document.getElementById("parentList");
+registerManager(
+  taskForm,
+  new SubtaskManager(taskForm),
+  "subtaskManager",
+  "subtasks"
+);
+
+function registerManager(
+  workingForm,
+  managerReference,
+  managerName,
+  inputPropertyName
+) {
+  workingForm.managers[managerName] = {
+    reference: managerReference,
+    name: inputPropertyName,
+  };
+}
+
+function renderSubtaskManager(form) {
+  const subtaskManagerReference = form.managers.subtaskManager.reference;
+  const rows = form.form.querySelectorAll(".row");
+  const lastRow = rows[rows.length - 1];
+  subtaskManagerReference.setup({
+    nodeBeforeWhichToPutSection: lastRow,
+  });
+}
+
+function createSubtask() {
+  const subtaskManagerReference = taskForm.managers.subtaskManager.reference;
+  if (!subtaskManagerReference.isInsideParentForm()) {
+    renderSubtaskManager(taskForm);
+  }
+  subtaskManagerReference.addSubtask();
+}
 
 function registerForm(backgroundId, codename) {
   FORM_REGISTRY[codename] = codename;
@@ -16,6 +55,7 @@ function registerForm(backgroundId, codename) {
     form: formBackground.querySelector("form"),
     title: formBackground.getElementsByClassName("form-title")[0],
     mode: MODES.CREATION,
+    managers: {},
   };
 }
 
@@ -29,7 +69,12 @@ function getFormData(formType) {
       formInputData[inputContentType] = formUtils.trimInput(current.value);
     }
   });
-  console.log(formInputData);
+  if (workingForm.managers) {
+    for (let manager of Object.values(workingForm.managers)) {
+      formInputData[manager.name] = manager.reference.getData();
+      manager.reference.reset()
+    }
+  }
 
   let path = null;
   if (workingForm.mode === MODES.EDITING) {
@@ -102,6 +147,7 @@ function setParentListSelectionToValue(id) {
 function prepareFormForEditingMode(data) {
   const formType = data.formType;
   const entity = data.entity;
+
   const workingForm = getWorkingForm(formType);
   const datasetPropertyName = `editable${formType}Id`;
 

@@ -2194,35 +2194,35 @@
           ) {
             listDisplay.prepend(listDiv);
           } else {
-            listDisplay.append(listDiv);
+            listDisplay.appendChild(listDiv);
           }
 
           const listRow = document.createElement("div");
           listRow.classList.add("list-row");
-          listDiv.append(listRow);
+          listDiv.appendChild(listRow);
 
           const listNameText = document.createElement("p");
           listNameText.classList.add("list-name");
           listNameText.textContent = list.name;
-          listRow.append(listNameText);
+          listRow.appendChild(listNameText);
 
           const buttonsDiv = document.createElement("div");
           buttonsDiv.classList.add("buttons-row");
-          listRow.append(buttonsDiv);
+          listRow.appendChild(buttonsDiv);
 
           renderAllListButtons(list, buttonsDiv);
 
           const hr = document.createElement("hr");
-          listDiv.append(hr);
+          listDiv.appendChild(hr);
 
           const taskSection = document.createElement("div");
           taskSection.classList.add("task-section");
-          listDiv.append(taskSection);
+          listDiv.appendChild(taskSection);
         }
 
         function renderAllListButtons(list, buttonsDiv) {
           Object.values(list.buttons).forEach((button) => {
-            buttonsDiv.append(button);
+            buttonsDiv.appendChild(button);
           });
         }
 
@@ -2532,14 +2532,14 @@
 
             const taskDiv = task.div;
             taskDiv.classList.add("task");
-            parentListTaskSection.append(taskDiv);
+            parentListTaskSection.appendChild(taskDiv);
 
-            taskDiv.append(task.finishTaskCheckbox);
+            taskDiv.appendChild(task.finishTaskCheckbox);
 
             const taskNameText = document.createElement("p");
             taskNameText.classList.add("task-name");
             taskNameText.textContent = task.name;
-            taskDiv.append(taskNameText);
+            taskDiv.appendChild(taskNameText);
 
             const taskDueDate = document.createElement("p");
             taskDueDate.classList.add("due-date");
@@ -2549,18 +2549,18 @@
               "default"
             ])(task.dueDate);
             setupPostponedClass(task.dueDate, taskDueDate);
-            taskDiv.append(taskDueDate);
+            taskDiv.appendChild(taskDueDate);
 
             const buttonsDiv = document.createElement("div");
             buttonsDiv.classList.add("buttons-row");
-            taskDiv.append(buttonsDiv);
+            taskDiv.appendChild(buttonsDiv);
 
             this.renderTaskButtons(buttonsDiv, task);
           }
 
           renderTaskButtons(buttonsDiv, task) {
             Object.values(task.buttons).forEach((button) => {
-              buttonsDiv.append(button);
+              buttonsDiv.appendChild(button);
             });
           }
 
