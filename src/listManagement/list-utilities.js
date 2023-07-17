@@ -10,6 +10,7 @@ export function setupTaskHelpers(list) {
 
 export function establishNewTask(taskData) {
   if (taskBelongsToThisList(taskData.parentList, this.id)) {
+    console.log(taskData);
     const task = this.taskCreator.createTask(taskData);
     this.taskRegistrar.registerTask(task);
     this.taskRenderer.renderTask(this.div, task);

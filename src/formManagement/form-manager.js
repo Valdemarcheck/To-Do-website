@@ -24,11 +24,12 @@ function getFormData(formType) {
 
   const formInputData = {};
   Array.from(workingForm.form.elements).forEach((current) => {
-    if (current.nodeName === "INPUT" || current.nodeName === "SELECT") {
+    if (current.nodeName !== "BUTTON") {
       const inputContentType = current.id;
       formInputData[inputContentType] = formUtils.trimInput(current.value);
     }
   });
+  console.log(formInputData);
 
   let path = null;
   if (workingForm.mode === MODES.EDITING) {

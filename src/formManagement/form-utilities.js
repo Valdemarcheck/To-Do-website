@@ -12,7 +12,7 @@ export function getEntityPath(workingForm, formType) {
 
 export function setupFormInputValues(workingForm, entity) {
   Array.from(workingForm.form.elements).forEach((current) => {
-    if (current.nodeName === "INPUT" || current.nodeName === "SELECT") {
+    if (current.nodeName !== "BUTTON") {
       current.value = entity[current.id];
     }
   });
