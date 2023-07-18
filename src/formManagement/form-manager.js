@@ -163,8 +163,9 @@ function prepareFormForEditingMode(data) {
   for (let manager of Object.values(workingForm.managers)) {
     const rows = workingForm.form.querySelectorAll(".row");
     const lastRow = rows[rows.length - 1];
-    console.log(manager, entity);
-    manager.reference.setup({ entity, nodeBeforeWhichToPutSection: lastRow });
+    if (entity[manager.name].length > 0) {
+      manager.reference.setup({ entity, nodeBeforeWhichToPutSection: lastRow });
+    }
   }
 
   if (formType === FORM_REGISTRY.List) {

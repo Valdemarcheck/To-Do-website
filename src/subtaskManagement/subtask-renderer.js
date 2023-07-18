@@ -8,18 +8,35 @@ export class SubtaskRenderer {
     subtaskDiv.classList.add("subtask-div");
     this.parentDiv.appendChild(subtaskDiv);
 
-    const subtaskContentInput = document.createElement("input");
-    subtaskContentInput.classList.add("subtask-content");
+    Object.values(subtask.buttons).forEach((button) => {
+      subtaskDiv.appendChild(button);
+    });
 
-    subtaskDiv.appendChild(subtaskContentInput);
-    if (subtask) {
-      subtaskContentInput.value = subtask.content;
-    }
+    const contentInput = subtask.contentInput;
+    contentInput.value = subtask.content;
+    subtaskDiv.appendChild(contentInput);
+
+    const subtaskCheckbox = subtask.finishSubtaskCheckbox;
+    subtaskDiv.appendChild(subtaskCheckbox);
   }
 
   stopRenderingSubtasksInnerElements(subtasksRegistry) {
     subtasksRegistry.forEach((item) => {
       item.div.innerHTML = "";
     });
+  }
+
+  stopRenderingSubtask(subtaskDiv) {
+    subtaskDiv.remove();
+  }
+
+  renderCheckedOrOtherwise(subtask) {
+    if (subtask.checked) {
+      subtask.div.classList.remove("unchecked");
+      subtask.div.classList.add("checked");
+    } else {
+      subtask.div.classList.add("unchecked");
+      subtask.div.classList.remove("checked");
+    }
   }
 }

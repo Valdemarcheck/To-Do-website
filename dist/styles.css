@@ -142,7 +142,6 @@ form {
   min-height: 40px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 10px;
   gap: 10px;
@@ -173,16 +172,21 @@ form {
   color: rgb(165, 44, 44);
 }
 
-.checked-task {
+.checked {
   background-color: rgb(122, 122, 122);
 }
 
-.unchecked-task {
+.unchecked {
   background-color: rgb(196, 196, 196);
 }
 
+.finish-checkbox {
+  width: 16px;
+  aspect-ratio: 1/1;
+}
+
 #subtask-section {
-  background-color: red;
+  background-color: rgb(41, 32, 28);
   padding: 10px;
   max-height: 30vh;
   overflow-y: auto;
@@ -194,9 +198,11 @@ form {
 
 .subtask-div {
   padding: 6px;
-  background-color: blue;
-}
 
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .subtask-content {
-  color: red;
+  flex: 1;
 }

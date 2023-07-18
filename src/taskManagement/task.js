@@ -29,6 +29,7 @@ export class Task {
 
     this.finishTaskCheckbox = document.createElement("input");
     this.finishTaskCheckbox.setAttribute("type", "checkbox");
+    this.finishTaskCheckbox.classList.add("finish-checkbox");
     this.finishTaskCheckbox.addEventListener("change", (e) => {
       if (e.currentTarget.checked) {
         PubSub.emit("TaskChecked", this);
