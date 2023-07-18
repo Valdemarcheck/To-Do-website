@@ -45,13 +45,11 @@ export class TaskRenderer {
   }
 
   renderTaskAsChecked(taskDiv) {
-    taskDiv.classList.remove("unchecked");
     taskDiv.classList.add("checked");
   }
 
   renderTaskAsUnchecked(taskDiv) {
     taskDiv.classList.remove("checked");
-    taskDiv.classList.add("unchecked");
   }
 
   stopRenderingTask(task) {

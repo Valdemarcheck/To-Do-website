@@ -32,10 +32,8 @@ export class SubtaskRenderer {
 
   renderCheckedOrOtherwise(subtask) {
     if (subtask.checked) {
-      subtask.div.classList.remove("unchecked");
       subtask.div.classList.add("checked");
     } else {
-      subtask.div.classList.add("unchecked");
       subtask.div.classList.remove("checked");
     }
   }

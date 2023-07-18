@@ -138,6 +138,7 @@ form {
 }
 
 .task {
+  background-color: rgb(196, 196, 196);
   border-radius: 4px;
   min-height: 40px;
 
@@ -172,14 +173,6 @@ form {
   color: rgb(165, 44, 44);
 }
 
-.checked {
-  background-color: rgb(122, 122, 122);
-}
-
-.unchecked {
-  background-color: rgb(196, 196, 196);
-}
-
 .finish-checkbox {
   width: 16px;
   aspect-ratio: 1/1;
@@ -197,6 +190,7 @@ form {
 }
 
 .subtask-div {
+  background-color: rgb(196, 196, 196);
   padding: 6px;
 
   display: flex;
@@ -205,4 +199,8 @@ form {
 }
 .subtask-content {
   flex: 1;
+}
+
+.checked {
+  background-color: rgb(122, 122, 122);
 }
