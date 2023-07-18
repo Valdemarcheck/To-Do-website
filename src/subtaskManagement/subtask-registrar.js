@@ -4,7 +4,8 @@ export class SubtaskRegistrar {
   constructor() {}
 
   registerSubtask(subtask) {
-    this.subtaskRegistry.push();
+    this.subtaskRegistry.push(subtask);
+    console.log(this.subtaskRegistry);
   }
 
   updateIds() {
@@ -19,5 +20,6 @@ export class SubtaskRegistrar {
 
   resetRegistry() {
     this.subtaskRegistry = [];
+    console.log(this.subtaskRegistry);
   }
 }

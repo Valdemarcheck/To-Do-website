@@ -1,9 +1,7 @@
 export class Subtask {
   div = document.createElement("div");
+  content = "";
   id = null;
 
-  constructor(data = null) {
-    this.content = data ? data.content : "";
-    this.div.classList.add("subtask-div");
-  }
+  constructor() {}
 }

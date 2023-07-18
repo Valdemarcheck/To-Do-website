@@ -9,11 +9,3 @@ export function getEntityPath(workingForm, formType) {
   const path = { listId: pathArray[0], taskId: pathArray[1] };
   return path;
 }
-
-export function setupFormInputValues(workingForm, entity) {
-  Array.from(workingForm.form.elements).forEach((current) => {
-    if (current.nodeName !== "BUTTON") {
-      current.value = entity[current.id];
-    }
-  });
-}

@@ -13,6 +13,7 @@ export function establishNewTask(taskData) {
     const task = this.taskCreator.createTask(taskData);
     this.taskRegistrar.registerTask(task);
     this.taskRenderer.renderTask(this.div, task);
+    console.log(task);
   }
 }
 
@@ -20,6 +21,7 @@ export function editTask(taskData) {
   if (taskBelongsToThisList(taskData.path.listId, this.id)) {
     const editedTask = this.taskRegistrar.editTask(taskData);
     this.taskRenderer.rerenderTask(this.div, editedTask);
+    console.log(task);
   }
 }
 

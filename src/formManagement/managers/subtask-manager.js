@@ -17,7 +17,12 @@ export class SubtaskManager {
     return this.parentForm.form.contains(this.subtaskSection);
   }
 
-  setup({ nodeBeforeWhichToPutSection = null }) {
+  setup({ nodeBeforeWhichToPutSection = null, entity = null }) {
+    if (entity) {
+      entity.subtasks.forEach((subtask) => {
+        this.addSubtask(subtask);
+      });
+    }
     if (nodeBeforeWhichToPutSection) {
       this.parentForm.form.insertBefore(
         this.subtaskSection,
@@ -28,18 +33,21 @@ export class SubtaskManager {
     }
   }
 
-  addSubtask() {
-    const newSubtask = this.subtaskCreator.createSubtask();
+  addSubtask(subtask) {
+    const newSubtask = subtask ? subtask : this.subtaskCreator.createSubtask();
     this.subtaskRegistrar.registerSubtask(newSubtask);
-    this.subtaskRegistrar.updateIds(this.subtaskSection);
     this.subtaskRenderer.renderSubtask(newSubtask);
+    this.subtaskRegistrar.updateIds();
   }
 
   getData() {
-    return this.subtaskRegistrar.getSubtasks();
+    return this.subtaskRegistrar.getSubtasks(this.subtaskSection);
   }
 
   reset() {
+    const registry = this.subtaskRegistrar.getSubtasks();
+    this.subtaskRenderer.unrenderSubtasks(registry);
+
     this.subtaskRegistrar.resetRegistry();
     this.subtaskSection.innerHTML = "";
     this.subtaskSection.remove();

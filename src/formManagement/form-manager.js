@@ -30,19 +30,14 @@ function registerManager(
   };
 }
 
-function renderSubtaskManager(form) {
-  const subtaskManagerReference = form.managers.subtaskManager.reference;
-  const rows = form.form.querySelectorAll(".row");
-  const lastRow = rows[rows.length - 1];
-  subtaskManagerReference.setup({
-    nodeBeforeWhichToPutSection: lastRow,
-  });
-}
-
 function createSubtask() {
   const subtaskManagerReference = taskForm.managers.subtaskManager.reference;
   if (!subtaskManagerReference.isInsideParentForm()) {
-    renderSubtaskManager(taskForm);
+    const rows = taskForm.form.querySelectorAll(".row");
+    const lastRow = rows[rows.length - 1];
+    subtaskManagerReference.setup({
+      nodeBeforeWhichToPutSection: lastRow,
+    });
   }
   subtaskManagerReference.addSubtask();
 }
@@ -72,7 +67,7 @@ function getFormData(formType) {
   if (workingForm.managers) {
     for (let manager of Object.values(workingForm.managers)) {
       formInputData[manager.name] = manager.reference.getData();
-      manager.reference.reset()
+      manager.reference.reset();
     }
   }
 
@@ -112,6 +107,10 @@ function resetForm(formType) {
   const finishUsingFormButton =
     workingForm.form.querySelector(".finish-button");
   finishUsingFormButton.style.display = "inline";
+
+  for (let manager of Object.values(workingForm.managers)) {
+    manager.reference.reset();
+  }
 }
 
 function openForm(formType) {
@@ -153,7 +152,18 @@ function prepareFormForEditingMode(data) {
 
   workingForm.title.textContent = `Edit a ${data.formType}`;
   workingForm.mode = MODES.EDITING;
-  formUtils.setupFormInputValues(workingForm, data.entity);
+
+  Array.from(workingForm.form.elements).forEach((node) => {
+    if (node.nodeName !== "BUTTON") {
+      node.value = entity[node.id];
+    }
+  });
+  for (let manager of Object.values(workingForm.managers)) {
+    const rows = workingForm.form.querySelectorAll(".row");
+    const lastRow = rows[rows.length - 1];
+    console.log(manager, entity);
+    manager.reference.setup({ entity, nodeBeforeWhichToPutSection: lastRow });
+  }
 
   if (formType === FORM_REGISTRY.List) {
     workingForm.form.dataset[datasetPropertyName] = entity.id;
