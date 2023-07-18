@@ -16,6 +16,7 @@ export class SubtaskManager {
   isInsideParentForm() {
     return this.parentForm.form.contains(this.subtaskSection);
   }
+
   setup({ nodeBeforeWhichToPutSection = null, entity = null }) {
     if (entity) {
       entity.subtasks.forEach((subtask) => {
@@ -31,11 +32,11 @@ export class SubtaskManager {
       this.parentForm.form.appendChild(this.subtaskSection);
     }
   }
+
   addSubtask(subtask) {
     const newSubtask = subtask ? subtask : this.subtaskCreator.createSubtask();
     this.subtaskRegistrar.registerSubtask(newSubtask);
     this.subtaskRenderer.renderSubtask(newSubtask);
-    this.subtaskRegistrar.updateIds();
     this.subtaskRegistrar.updateIds();
   }
 

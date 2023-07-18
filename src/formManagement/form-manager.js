@@ -113,10 +113,6 @@ function resetForm(formType) {
   for (let manager of Object.values(workingForm.managers)) {
     manager.reference.reset();
   }
-
-  for (let manager of Object.values(workingForm.managers)) {
-    manager.reference.reset();
-  }
 }
 
 function openForm(formType) {
@@ -158,18 +154,6 @@ function prepareFormForEditingMode(data) {
 
   workingForm.title.textContent = `Edit a ${data.formType}`;
   workingForm.mode = MODES.EDITING;
-
-  Array.from(workingForm.form.elements).forEach((node) => {
-    if (node.nodeName !== "BUTTON") {
-      node.value = entity[node.id];
-    }
-  });
-  for (let manager of Object.values(workingForm.managers)) {
-    const rows = workingForm.form.querySelectorAll(".row");
-    const lastRow = rows[rows.length - 1];
-    console.log(manager, entity);
-    manager.reference.setup({ entity, nodeBeforeWhichToPutSection: lastRow });
-  }
 
   Array.from(workingForm.form.elements).forEach((node) => {
     if (node.nodeName !== "BUTTON") {

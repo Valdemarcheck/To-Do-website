@@ -1,5 +1,3 @@
-import { removeEntityDiv } from "../utilities";
-
 export class SubtaskRenderer {
   constructor(parentDiv) {
     this.parentDiv = parentDiv;
@@ -7,7 +5,6 @@ export class SubtaskRenderer {
 
   renderSubtask(subtask) {
     const subtaskDiv = subtask.div;
-    subtaskDiv.classList.add("subtask-div");
     subtaskDiv.classList.add("subtask-div");
     this.parentDiv.appendChild(subtaskDiv);
 
