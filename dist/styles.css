@@ -196,3 +196,7 @@ form {
   padding: 6px;
   background-color: blue;
 }
+
+.subtask-content {
+  color: red;
+}

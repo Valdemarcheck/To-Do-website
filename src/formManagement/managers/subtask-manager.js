@@ -9,15 +9,19 @@ export class SubtaskManager {
     this.subtaskSection.id = "subtask-section";
 
     this.subtaskCreator = new SubtaskCreator();
-    this.subtaskRegistrar = new SubtaskRegistrar();
+    this.subtaskRegistrar = new SubtaskRegistrar(this.subtaskSection);
     this.subtaskRenderer = new SubtaskRenderer(this.subtaskSection);
   }
 
   isInsideParentForm() {
     return this.parentForm.form.contains(this.subtaskSection);
   }
-
-  setup({ nodeBeforeWhichToPutSection = null }) {
+  setup({ nodeBeforeWhichToPutSection = null, entity = null }) {
+    if (entity) {
+      entity.subtasks.forEach((subtask) => {
+        this.addSubtask(subtask);
+      });
+    }
     if (nodeBeforeWhichToPutSection) {
       this.parentForm.form.insertBefore(
         this.subtaskSection,
@@ -27,19 +31,23 @@ export class SubtaskManager {
       this.parentForm.form.appendChild(this.subtaskSection);
     }
   }
-
-  addSubtask() {
-    const newSubtask = this.subtaskCreator.createSubtask();
+  addSubtask(subtask) {
+    const newSubtask = subtask ? subtask : this.subtaskCreator.createSubtask();
     this.subtaskRegistrar.registerSubtask(newSubtask);
-    this.subtaskRegistrar.updateIds(this.subtaskSection);
     this.subtaskRenderer.renderSubtask(newSubtask);
+    this.subtaskRegistrar.updateIds();
+    this.subtaskRegistrar.updateIds();
   }
 
   getData() {
-    return this.subtaskRegistrar.getSubtasks();
+    this.subtaskRegistrar.applyData();
+    return this.subtaskRegistrar.getSubtasks(this.subtaskSection);
   }
 
   reset() {
+    const registry = this.subtaskRegistrar.getSubtasks();
+    this.subtaskRenderer.stopRenderingSubtasksInnerElements(registry);
+
     this.subtaskRegistrar.resetRegistry();
     this.subtaskSection.innerHTML = "";
     this.subtaskSection.remove();
