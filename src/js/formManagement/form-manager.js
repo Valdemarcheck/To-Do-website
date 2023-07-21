@@ -66,7 +66,9 @@ function getFormData(formType) {
   });
   if (workingForm.managers) {
     for (let manager of Object.values(workingForm.managers)) {
-      formInputData[manager.name] = manager.reference.getData();
+      const data = manager.reference.getData();
+      console.log(data);
+      formInputData[manager.name] = data;
       manager.reference.reset();
     }
   }
@@ -161,8 +163,9 @@ function prepareFormForEditingMode(data) {
   for (let manager of Object.values(workingForm.managers)) {
     const rows = workingForm.form.querySelectorAll(".row");
     const lastRow = rows[rows.length - 1];
-    console.log(manager, entity);
-    manager.reference.setup({ entity, nodeBeforeWhichToPutSection: lastRow });
+    if (entity[manager.name].length > 0) {
+      manager.reference.setup({ entity, nodeBeforeWhichToPutSection: lastRow });
+    }
   }
 
   if (formType === FORM_REGISTRY.List) {

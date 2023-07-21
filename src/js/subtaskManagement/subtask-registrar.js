@@ -1,11 +1,12 @@
 export class SubtaskRegistrar {
   subtaskRegistry = [];
 
-  constructor() {}
+  constructor(parentDiv) {
+    this.parentDiv = parentDiv;
+  }
 
   registerSubtask(subtask) {
     this.subtaskRegistry.push(subtask);
-    console.log(this.subtaskRegistry);
   }
 
   updateIds() {
@@ -14,12 +15,31 @@ export class SubtaskRegistrar {
     });
   }
 
+  applyData() {
+    const queryForInputElements = "input:not([type='checkbox'])";
+    const inputs = this.parentDiv.querySelectorAll(queryForInputElements);
+
+    inputs.forEach((item, index) => {
+      const subtask = this.subtaskRegistry[index];
+      console.log(subtask, subtask.content, item, item.value);
+      subtask.content = item.value;
+    });
+  }
+
   getSubtasks() {
     return this.subtaskRegistry;
   }
 
+  removeSubtaskById(id) {
+    this.subtaskRegistry.splice(id, 1);
+  }
+
   resetRegistry() {
     this.subtaskRegistry = [];
-    console.log(this.subtaskRegistry);
+  }
+
+  setCheckedOrOtherwise(subtask) {
+    const checked = subtask.finishSubtaskCheckbox.checked;
+    subtask.checked = checked;
   }
 }

@@ -1,3 +1,4 @@
+import { PubSub } from "../PubSub";
 import { TaskCreator } from "../taskManagement/task-creator";
 import { TaskRegistrar } from "../taskManagement/task-registrar";
 import { TaskRenderer } from "../taskManagement/task-renderer";
@@ -13,7 +14,6 @@ export function establishNewTask(taskData) {
     const task = this.taskCreator.createTask(taskData);
     this.taskRegistrar.registerTask(task);
     this.taskRenderer.renderTask(this.div, task);
-    console.log(task);
   }
 }
 
@@ -21,7 +21,6 @@ export function editTask(taskData) {
   if (taskBelongsToThisList(taskData.path.listId, this.id)) {
     const editedTask = this.taskRegistrar.editTask(taskData);
     this.taskRenderer.rerenderTask(this.div, editedTask);
-    console.log(task);
   }
 }
 

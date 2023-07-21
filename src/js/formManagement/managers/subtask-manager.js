@@ -1,3 +1,4 @@
+import { PubSub } from "../../PubSub";
 import { SubtaskCreator } from "../../subtaskManagement/subtask-creator";
 import { SubtaskRegistrar } from "../../subtaskManagement/subtask-registrar";
 import { SubtaskRenderer } from "../../subtaskManagement/subtask-renderer";
@@ -9,8 +10,28 @@ export class SubtaskManager {
     this.subtaskSection.id = "subtask-section";
 
     this.subtaskCreator = new SubtaskCreator();
-    this.subtaskRegistrar = new SubtaskRegistrar();
+    this.subtaskRegistrar = new SubtaskRegistrar(this.subtaskSection);
     this.subtaskRenderer = new SubtaskRenderer(this.subtaskSection);
+
+    PubSub.on("UserWantsToRemoveSubtask", this.removeSubtask.bind(this));
+    PubSub.on(
+      "UserWantsToCheckSubtask",
+      this.checkSubtaskFinishedOrOtherwise.bind(this)
+    );
+  }
+
+  checkSubtaskFinishedOrOtherwise(subtask) {
+    this.subtaskRegistrar.setCheckedOrOtherwise(subtask);
+    this.subtaskRenderer.renderCheckedOrOtherwise(subtask);
+  }
+
+  removeSubtask(subtask) {
+    this.subtaskRenderer.stopRenderingSubtask(subtask.div);
+    this.subtaskRegistrar.removeSubtaskById(subtask);
+
+    if (!this.subtaskSection.hasChildNodes()) {
+      this.subtaskSection.remove();
+    }
   }
 
   isInsideParentForm() {
@@ -23,6 +44,7 @@ export class SubtaskManager {
         this.addSubtask(subtask);
       });
     }
+
     if (nodeBeforeWhichToPutSection) {
       this.parentForm.form.insertBefore(
         this.subtaskSection,
@@ -41,12 +63,13 @@ export class SubtaskManager {
   }
 
   getData() {
+    this.subtaskRegistrar.applyData();
     return this.subtaskRegistrar.getSubtasks(this.subtaskSection);
   }
 
   reset() {
     const registry = this.subtaskRegistrar.getSubtasks();
-    this.subtaskRenderer.unrenderSubtasks(registry);
+    this.subtaskRenderer.stopRenderingSubtasksInnerElements(registry);
 
     this.subtaskRegistrar.resetRegistry();
     this.subtaskSection.innerHTML = "";

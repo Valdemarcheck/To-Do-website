@@ -1,5 +1,3 @@
-import { removeEntityDiv } from "../utilities";
-
 export class SubtaskRenderer {
   constructor(parentDiv) {
     this.parentDiv = parentDiv;
@@ -10,19 +8,33 @@ export class SubtaskRenderer {
     subtaskDiv.classList.add("subtask-div");
     this.parentDiv.appendChild(subtaskDiv);
 
-    const subtaskContentInput = document.createElement("input");
-    subtaskContentInput.classList.add("subtask-content");
+    Object.values(subtask.buttons).forEach((button) => {
+      subtaskDiv.appendChild(button);
+    });
 
-    subtaskDiv.appendChild(subtaskContentInput);
-    if (subtask) {
-      subtaskContentInput.textContent = subtask.content;
-    }
-    console.log(subtaskDiv);
+    const contentInput = subtask.contentInput;
+    contentInput.value = subtask.content;
+    subtaskDiv.appendChild(contentInput);
+
+    const subtaskCheckbox = subtask.finishSubtaskCheckbox;
+    subtaskDiv.appendChild(subtaskCheckbox);
   }
 
-  unrenderSubtasks(subtasksRegistry) {
+  stopRenderingSubtasksInnerElements(subtasksRegistry) {
     subtasksRegistry.forEach((item) => {
       item.div.innerHTML = "";
     });
+  }
+
+  stopRenderingSubtask(subtaskDiv) {
+    subtaskDiv.remove();
+  }
+
+  renderCheckedOrOtherwise(subtask) {
+    if (subtask.checked) {
+      subtask.div.classList.add("checked");
+    } else {
+      subtask.div.classList.remove("checked");
+    }
   }
 }
