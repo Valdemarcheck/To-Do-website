@@ -1,5 +1,13 @@
 /* SETUP */
 
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-VariableFont_slnt\,wght.ttf")
+      format("woff2 supports variations"),
+    url("./fonts/Inter-VariableFont_slnt\,wght.ttf") format("woff2-variations");
+  font-weight: 300 400 600;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -10,6 +18,7 @@
   /* Text setup */
   font-size: 4px;
   font-weight: normal;
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
   /* Variables setup */
   --main-bg: #1e1e1e;

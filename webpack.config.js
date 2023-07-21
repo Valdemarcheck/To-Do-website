@@ -6,9 +6,24 @@ module.exports = {
   devServer: {
     static: "./dist",
   },
-  entry: "./src/index.js",
+  entry: {
+    main: "./src/js/index.js",
+    styles: "./src/css/styles.css",
+  },
   output: {
-    filename: "main.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+      },
+    ],
   },
 };
