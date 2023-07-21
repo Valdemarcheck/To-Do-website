@@ -1,11 +1,10 @@
 const path = require("path");
+// DEBUG
+// const BundleAnalyzerPlugin =
+//   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   mode: "development",
-  devtool: "inline-source-map",
-  devServer: {
-    static: "./dist",
-  },
   entry: {
     main: "./src/js/index.js",
     styles: "./src/css/styles.css",
@@ -14,6 +13,9 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
   },
+  plugins: [
+    // new BundleAnalyzerPlugin(), // DEBUG
+  ],
   module: {
     rules: [
       {
@@ -25,5 +27,9 @@ module.exports = {
         type: "asset/resource",
       },
     ],
+  },
+  devtool: "inline-source-map",
+  devServer: {
+    static: "./dist",
   },
 };
