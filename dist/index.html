@@ -4,21 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="main.js" defer></script>
-    <script src="styles.js"></script>
+    <link rel="stylesheet" href="./main.css" />
     <title>To do app</title>
   </head>
   <body>
     <nav>
-      <button id="list-form-open-button">+</button>
+      <div id="header">
+        <div id="logo"></div>
+        <div id="create-new-list-section">
+          <h3 id="create-new-list-title">Create new list</h3>
+          <button id="list-form-open-button"></button>
+        </div>
+      </div>
+      <hr class="gradient" />
+      <div id="lists-section">
+        <h2>Your lists</h2>
+        <ul id="lists"></ul>
+      </div>
     </nav>
     <main>
-      <div id="lists-section">
-        <h1>Your lists</h1>
-        <hr />
-        <div id="lists"></div>
+      <div id="no-list-selected-section">
+        <div id="sheets-of-paper"></div>
+        <h3 class="half-seen">You haven't selected any lists yet</h3>
       </div>
     </main>
-    <footer></footer>
+    <footer>
+      <a id="github-link" href="https://github.com/Valdemarcheck"></a>
+    </footer>
     <div class="form-background" id="list-form-background">
       <form id="list-form">
         <div class="row">

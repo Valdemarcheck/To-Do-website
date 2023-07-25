@@ -1,3 +1,4 @@
+import "./../css/styles.css";
 import "./unique-button-manager";
 import "./formManagement/form-manager";
 import "./listManagement/list-bundle";

@@ -1,26 +1,25 @@
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // DEBUG
 // const BundleAnalyzerPlugin =
 //   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   mode: "development",
-  entry: {
-    main: "./src/js/index.js",
-    styles: "./src/css/styles.css",
-  },
+  entry: "./src/js/index.js",
   output: {
-    filename: "[name].js",
+    filename: "main.js",
     path: path.resolve(__dirname, "dist"),
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     // new BundleAnalyzerPlugin(), // DEBUG
   ],
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
