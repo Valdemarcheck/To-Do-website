@@ -16,7 +16,7 @@
 
 :root {
   /* Text setup */
-  font-size: 12px;
+  font-size: 14px;
   font-weight: normal;
   font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--default-text-color);
@@ -44,35 +44,21 @@
     rgba(151, 117, 249, 0.4) 100%
   );
 
-  --1-5-padding: 1.5rem;
-  --1-padding: 1rem;
-  --0-75-padding: 0.75rem;
-
-  --h2-size: 2.5rem;
-  --h3-size: 1.5rem;
-  --p-size: 2rem;
-
   --circle-corners: 100%;
-  --2-corner-radius: 2rem;
-  --1-corner-radius: 1rem;
-  --0-5-corner-radius: 0.5rem;
-
-  --1-5-gap: 1.5rem;
-  --1-gap: 1rem;
 }
 
 h2 {
-  font-size: var(--h2-size);
+  font-size: 2.5rem;
   font-weight: 600;
 }
 
 h3 {
-  font-size: var(--h3-size);
+  font-size: 2rem;
   font-weight: 400;
 }
 
 p {
-  font-size: var(--p-size);
+  font-size: 1.5rem;
 }
 
 hr {
@@ -92,9 +78,8 @@ body {
   height: 100vh;
   background-color: var(--main-bg);
 
-  display: grid;
-  grid-template-columns: 3fr 9fr;
-  grid-template-rows: 6fr 1fr;
+  display: flex;
+  flex-direction: column;
 }
 
 button {
@@ -104,11 +89,25 @@ button {
   border: none;
 }
 
+/* MAIN STYLES */
+
+main {
+  padding: 0 2rem;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
 /* FOOTER STYLES */
 
 footer {
+  min-height: 100px;
   background-color: var(--darker-bg-1);
-  padding: var(--1-5-padding);
+  padding: 1.5rem;
   grid-column: 1/3;
   grid-row: 2/3;
 
@@ -117,98 +116,13 @@ footer {
 }
 
 #github-link {
-  width: 5.25rem;
+  background-color: red;
+  height: 100%;
   aspect-ratio: 1/1;
 
   background: url(./images/github-64.png) center no-repeat;
   background-size: contain;
 }
-
-/* NAVBAR STYLES */
-
-nav {
-  background-color: var(--accent-bg);
-  background: var(--navbar-gradient);
-  grid-column: 1/2;
-  grid-row: 1/2;
-
-  /* Gradient border */
-  border-right: 3px solid transparent;
-  border-image-slice: 1;
-  border-image-source: var(--accent-gradient);
-
-  display: flex;
-  flex-direction: column;
-  padding: var(--1-5-padding);
-  gap: var(--1-5-gap);
-}
-
-#header {
-  display: flex;
-  padding: var(--0-75-padding) var(--1-5-padding);
-  justify-content: center;
-  align-items: center;
-  gap: var(--1-5-gap);
-  align-self: stretch;
-}
-
-#logo {
-  width: 3.7rem;
-  aspect-ratio: 1/1;
-  background: url("./images/logo-100.png") center no-repeat;
-  background-size: contain;
-}
-
-#create-new-list-section {
-  border-radius: var(--0-5-corner-radius);
-  background-color: var(--darker-bg-1);
-
-  display: flex;
-  padding: var(--0-75-padding) var(--1-5-padding);
-  justify-content: center;
-  align-items: center;
-  gap: var(--1-5-gap);
-  flex: 1;
-}
-
-#create-new-list-title {
-  white-space: nowrap;
-  flex: 1;
-}
-
-#list-form-open-button {
-  border-radius: var(--circle-corners);
-  width: 2.8rem;
-  aspect-ratio: 1/1;
-
-  background: url(./images/plus-48.png) center no-repeat;
-  background-size: contain;
-}
-
-#list-form-open-button img {
-  width: 100%;
-  aspect-ratio: 1/1;
-}
-
-/* MAIN GENERAL STYLES */
-
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* MAIN UNCHOSEN STYLES */
-
-#no-list-selected-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* MAIN CHOSEN STYLES */
 
 /* FORM STYLES */
 
@@ -250,26 +164,12 @@ form {
   min-width: max-content;
 }
 
-/*  */
-/*  */
-/*  */
-#list-form-background {
-  display: none;
-}
-
-#task-form-background {
-  display: none;
-}
-/*  */
-/*  */
-/*  */
-
 /* LISTS AND LIST SECTION STYLES */
 
 #lists-section {
   display: flex;
   flex-direction: column;
-  gap: var(--1-gap);
+  gap: 1rem;
   align-self: stretch;
 }
 
@@ -283,7 +183,7 @@ form {
   background-color: var(--darker-bg-2);
   height: auto;
   padding: 0.625rem 1.25rem;
-  border-radius: var(--2-corner-radius);
+  border-radius: 2px;
 
   display: flex;
   flex-direction: column;
@@ -396,3 +296,17 @@ form {
 .checked {
   background-color: rgb(122, 122, 122);
 }
+
+/* Adjustable (via code) form visibility */
+/*  */
+/*  */
+#list-form-background {
+  display: none;
+}
+
+#task-form-background {
+  display: none;
+}
+/*  */
+/*  */
+/*  */
