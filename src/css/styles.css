@@ -176,6 +176,7 @@ form {
 #lists {
   display: flex;
   gap: inherit;
+  overflow-x: auto;
 }
 
 .list {
@@ -183,7 +184,8 @@ form {
   background-color: var(--darker-bg-2);
   height: auto;
   padding: 0.625rem 1.25rem;
-  border-radius: 2px;
+  border-radius: 5px;
+  border: 3px solid black;
 
   display: flex;
   flex-direction: column;
@@ -220,6 +222,7 @@ form {
   width: 100%;
   min-height: 300px;
   padding: 10px;
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
