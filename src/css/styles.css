@@ -180,7 +180,7 @@ form {
 }
 
 .list {
-  min-width: 20rem;
+  min-width: 22rem;
   background-color: var(--darker-bg-2);
   height: auto;
   padding: 0.625rem 1.25rem;
@@ -202,9 +202,9 @@ form {
 }
 
 .list-name {
-  max-width: 20ch;
+  max-width: 25ch;
   max-height: 2lh;
-  overflow: hidden;
+  word-break: break-all;
 }
 
 .buttons-row {
