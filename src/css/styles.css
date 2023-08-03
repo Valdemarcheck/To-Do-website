@@ -37,7 +37,7 @@
   --indicator-green: #7aff64;
   --indicator-blue: #86a8ff;
 
-  --accent-gradient: linear-gradient(90deg, #a374c7 0%, #9775f9 100%);
+  --accent-gradient: linear-gradient(0deg, #a374c7 0%, #9775f9 100%);
   --navbar-gradient: linear-gradient(
     180deg,
     rgba(33, 28, 36, 0.29) 0%,
@@ -67,12 +67,6 @@ hr {
   background: var(--accent-gradient);
 }
 
-.half-seen {
-  color: var(--half-seen-text);
-}
-
-/* POSITIONING MAIN ELEMENTS */
-
 body {
   width: 100vw;
   height: 100vh;
@@ -83,10 +77,19 @@ body {
 }
 
 button {
-  min-width: 2rem;
-  min-height: 2rem;
+  background-color: var(--lighter-bg-1);
+  color: var(--default-text-color);
+  font-weight: bold;
+
+  aspect-ratio: 2/1;
+  min-height: 1.8rem;
   padding: 0.2rem;
   border: none;
+  border-radius: 5px;
+}
+
+.half-seen {
+  color: var(--half-seen-text);
 }
 
 /* MAIN STYLES */
@@ -100,6 +103,14 @@ main {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+}
+
+#list-form-open-button {
+  width: 4rem;
+  aspect-ratio: 1/1;
+  border-radius: var(--circle-corners);
+  font-size: 3rem;
+  font-weight: normal;
 }
 
 /* FOOTER STYLES */
@@ -300,9 +311,7 @@ form {
   background-color: rgb(122, 122, 122);
 }
 
-/* Adjustable (via code) form visibility */
-/*  */
-/*  */
+/* AFFECTED BY JAVASCRIPT */
 #list-form-background {
   display: none;
 }
@@ -310,6 +319,18 @@ form {
 #task-form-background {
   display: none;
 }
-/*  */
-/*  */
-/*  */
+
+/* ACCESSABILITY */
+
+button:hover {
+  transition: background 0.1s ease-out;
+  background: var(--darker-bg-1);
+}
+
+button:active {
+  background: var(--lighter-bg-2);
+}
+
+#list-form-open-button:hover {
+  background: var(--accent-bg);
+}
